@@ -1,0 +1,41 @@
+.header-section {
+  margin-bottom: 35px;
+}
+.actions {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  button {
+    width: 270px;
+    height: 60px;
+    &:first-child {
+      margin-right: 10px;
+    }
+  }
+}
+
+.recipient-details {
+    ::ng-deep .mat-slide-toggle-thumb {
+        background-color: #FFF;
+        margin-top: 5px;
+        margin-left: 2px;
+    }
+    ::ng-deep .mat-slide-toggle-bar {
+      background-color: #C3CAD2;
+      height: 24.5px;
+      border-radius: 12.25px;
+      width: 42px;
+    }
+    ::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb {
+        background-color: #FFF;
+    }
+    ::ng-deep .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar {
+        background-color: #43C89F;
+    }
+    .mat-slide-toggle ::ng-deep .mat-slide-toggle-content {
+        margin-top: auto;
+        width: 90px;
+        color: #C3C6C5;
+    }
+}

@@ -1,0 +1,138 @@
+<div class="card">
+  <div class="tab-header">
+    <div class="title-section">
+      <div class="wrapper-title">
+        <h3 class="bold">Gestão de recorrência</h3>
+        <p class="regular-light">Planos</p>
+      </div>
+      <button
+        mat-button
+        class="main-button"
+        (click)="openNewPlanModal()"
+        name="add-plan-btn"
+      >
+        Adicionar novo plano
+      </button>
+    </div>
+  </div>
+  <div class="container">
+    <div class="loading-shade" *ngIf="loading">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="table-container">
+      <table mat-table [dataSource]="dataSource">
+        <!-- Checkbox Column -->
+
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Nome</th>
+          <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+        </ng-container>
+
+        <!-- amount Column -->
+        <ng-container matColumnDef="amount">
+          <th mat-header-cell *matHeaderCellDef>Valor</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.amount / 100 | currency }}
+          </td>
+        </ng-container>
+
+        <!-- interval Column -->
+        <ng-container matColumnDef="interval">
+          <th mat-header-cell *matHeaderCellDef>Frequência</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.interval | interval }}
+          </td>
+        </ng-container>
+
+        <!-- description Column -->
+        <ng-container matColumnDef="description">
+          <th mat-header-cell *matHeaderCellDef>Descrição</th>
+          <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+        </ng-container>
+
+        <!-- created Column -->
+        <ng-container matColumnDef="created">
+          <th mat-header-cell *matHeaderCellDef>Criação</th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.created | date: 'dd/MM/yyyy' }}
+          </td>
+        </ng-container>
+
+        <!-- recurrences Column -->
+        <ng-container matColumnDef="recurrences">
+          <th mat-header-cell *matHeaderCellDef>Adesões</th>
+          <td mat-cell *matCellDef="let element">{{ element.recurrences }}</td>
+        </ng-container>
+
+        <!-- active Column -->
+        <ng-container matColumnDef="active">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td
+            mat-cell
+            *matCellDef="let element"
+            [innerHtml]="element.active | statusPlan"
+          ></td>
+        </ng-container>
+
+        <!-- actions Column -->
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef></th>
+          <td mat-cell *matCellDef="let row">
+            <button
+              mat-button
+              [matMenuTriggerFor]="menu"
+              class="action"
+              name="action"
+            >
+              <img src="../../../assets/icons/ellipsis.svg" />
+            </button>
+            <mat-menu #menu="matMenu">
+              <button
+                mat-menu-item
+                (click)="openDetailsModal(row)"
+                name="info-modal-btn"
+              >
+                Informações
+              </button>
+              <button
+                mat-menu-item
+                (click)="editPlan(row)"
+                name="edit-modal-btn"
+              >
+                Editar
+              </button>
+              <button
+                mat-menu-item
+                (click)="updateStatusPlan(row)"
+                name="update-modal-btn"
+              >
+                {{ row.active ? 'Desativar' : 'Ativar' }}
+              </button>
+            </mat-menu>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+    <div class="table-footer">
+      <button
+        mat-button
+        class="main-button"
+        name="main-button"
+        id="id-recurrenceplan-main-button"
+        *ngIf="length"
+        (click)="exportPlans()"
+      >
+        Fazer download
+      </button>
+      <mat-paginator
+        [length]="length"
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        showFirstLastButtons
+      ></mat-paginator>
+    </div>
+  </div>
+</div>

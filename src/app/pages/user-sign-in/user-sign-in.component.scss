@@ -1,0 +1,209 @@
+.content {
+    height: 100%;
+    width: 100%;
+    background-image: url('../../../assets/login-background.png');
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .card {
+      background-color: var(--nix-white);
+      border-radius: 8px;
+      height: auto;
+      width: 1000px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+      .logo {
+        margin-bottom: 50px;
+        img {
+          cursor: pointer;
+        }
+      }
+      mat-horizontal-stepper {
+        width: 100%;
+        div.two-inputs {
+          display: flex;
+          mat-form-field {
+            &:first-child {
+              margin-right: 16px;
+            }
+            &:last-child {
+              margin-left: 16px;
+            }
+          }
+        }
+        div.three-inputs {
+          display: flex;
+          mat-form-field {
+            &:nth-child(1) {
+              margin-right: 16px;
+            }
+            &:nth-child(2) {
+              margin-right: 16px;
+              margin-left: 16px;
+            }
+            &:nth-child(3) {
+              margin-left: 16px;
+            }
+          }
+        }
+        div.step-wrapper {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: center;
+          text-align: center;
+          margin-bottom: 40px;
+          .mb-40 {
+            margin-bottom: 40px !important;
+          }
+          p {
+            width: 70%;
+          }
+        }
+        div.step-wrapper-section {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          align-items: center;
+          text-align: center;
+          margin-bottom: 40px;
+          .docSelect {
+            width: 35%;
+          }
+          div.top-side {
+            margin-bottom: 32px;
+          }
+          div.middle {
+            width: 70%;
+            margin-bottom: 32px;
+            div.icon-list {
+              margin-top: 24px;
+              display: flex;
+              justify-content: space-between;
+              div.icon {
+                width: 100px;
+                text-align: center;
+                img {
+                  width: 50px;
+                  height: 50px;
+                }
+                p {
+                  color: var(--nix-grey-primary);
+                  text-align: center;
+                }
+              }
+            }
+          }
+          div.bottom-side {
+            div {
+              display: flex;
+              align-items: center;
+              button {
+                margin-right: 10px;
+              }
+              &:first-child {
+                margin-bottom: 10px;
+              }
+            }
+          }
+        }
+        div.step-address-section {
+          display: flex;
+          flex-direction: column;
+        }
+        div.success-wrapper {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          :nth-child(1),
+          :nth-child(2),
+          :nth-child(3) {
+            margin-bottom: 15px !important;
+          }
+          p {
+            color: var(--nix-grey-primary);
+          }
+        }
+        div.actions {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          p {
+            font-size: 12px;
+            color: var(--nix-grey-primary) !important;
+          }
+          button {
+            width: 380px;
+            height: 55px;
+            font-size: 16px;
+          }
+          a {
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+  .material-form {
+    width: 100%;
+  }
+  button.file-input-button {
+    width: auto;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .main-button {
+    width: 95px;
+    height: 40px;
+  }
+  @media only screen and(min-width: 320px) and (max-width: 425px) {
+    .content {
+      overflow-y: scroll;
+      align-items: flex-start !important;
+      .card {
+        margin: 10px 0 0 7px !important;
+        padding: 20px 20px !important;
+        height: auto !important;
+        width: 100% !important;
+        .logo {
+          margin-bottom: 20px;
+        }
+        .form {
+          .wrapper {
+            display: flex;
+            flex-direction: column;
+            .form-left-side {
+              margin-right: 0 !important;
+            }
+            .form-right-side {
+              margin-left: 0 !important;
+            }
+          }
+          .mat-form-field {
+            margin-bottom: 0px !important;
+          }
+          .actions {
+            button {
+              width: 100% !important;
+            }
+          }
+        }
+        .response-content {
+          h3 {
+            text-align: center !important;
+          }
+          p {
+            text-align: center !important;
+          }
+        }
+      }
+    }
+  }
+  

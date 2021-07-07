@@ -1,0 +1,94 @@
+mat-label {
+  margin: 0 !important;
+}
+form {
+  .wrapper-form {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 40% auto auto;
+    grid-template-areas:
+      "FIRSTGRID SECONDGRID SECONDGRID"
+      "FIRSTGRID THIRDGRID FOURTHGRID"
+      "FIFTHGRID FIFTHGRID FIFTHGRID";
+
+    .first-grid {
+      grid-area: FIRSTGRID;
+    }
+    .second-grid {
+      grid-area: SECONDGRID;
+      margin-left: 30px;
+    }
+    .third-grid {
+      grid-area: THIRDGRID;
+      margin-left: 30px;
+    }
+    .fourth-grid {
+      grid-area: FOURTHGRID;
+      display: flex;
+      align-items: center;
+    }
+    .fifth-grid {
+      grid-area: FIFTHGRID;
+    }
+    .inside-text {
+      font-size: 11px;
+      font-style: italic;
+      color: var(--nix-grey-tertiary);
+    }
+    .material-form {
+      width: 100%;
+      font-size: 14px;
+    }
+    textarea {
+      min-height: 80px;
+    }
+  }
+  button {
+    width: 170px;
+    height: 45px;
+  }
+  .radio-list-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    height: 100%;
+    padding: 15px 0 20px 0;
+    label {
+      margin-right: 10px;
+      cursor: pointer;
+    }
+    span {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: baseline;
+      justify-content: flex-end;
+      cursor: pointer;
+    }
+  }
+  input[type="radio"] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    border: 0px;
+    -webkit-appearance: none;
+    border: 1px solid var(--nix-grey-primary);
+    border-radius: 50%;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &:before {
+      content: "";
+      display: block;
+      width: 90%;
+      height: 90%;
+      border-radius: 50%;
+    }
+    &:checked {
+      &:before {
+        background: var(--nix-green);
+      }
+    }
+  }
+}

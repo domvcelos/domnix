@@ -1,0 +1,51 @@
+<mat-dialog-content>
+  <div class="close-wrapper">
+    <button mat-button mat-dialog-close name="modal-close-btn">
+      <img src="../../../../assets/icons/close-square.svg" />
+    </button>
+  </div>
+  <div class="content">
+    <div class="logo">
+      <img src="../../../../../assets/nix-empresas-logo-black.svg" />
+    </div>
+    <div class="recipient">
+      <span>
+        <p class="large-light">Plano</p>
+        <h3 class="bold">{{ plan.name }}</h3>
+      </span>
+    </div>
+
+    <div class="recipient-details">
+      <span>
+        <p class="large-light">Frequência:</p>
+        <p class="large-light">{{ getInterval(plan.interval) }}</p>
+      </span>
+
+      <span>
+        <p class="large-light">Descrição:</p>
+        <p class="large-light">{{ plan.description }}</p>
+      </span>
+      <span>
+        <p class="large-light">Status</p>
+        <p class="large-light" [innerHtml]="plan.active | statusPlan"></p>
+      </span>
+      <span>
+        <p class="large-light">Adesões</p>
+        <p class="large-light">{{ plan.recurrences }}</p>
+      </span>
+      <span>
+        <p class="large-light">Criação</p>
+        <p class="large-light">{{ plan.created | date: 'dd/MM/yyyy' }}</p>
+      </span>
+      <span>
+        <p class="large-light">ID</p>
+        <p class="large-light">{{ plan.id }}</p>
+      </span>
+      <hr />
+      <span>
+        <p class="large-light">Valor</p>
+        <h3 class="bold">{{ plan.amount / 100 | currency }}</h3>
+      </span>
+    </div>
+  </div>
+</mat-dialog-content>

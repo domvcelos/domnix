@@ -1,0 +1,86 @@
+.content {
+  width: 100%;
+  height: 100%;
+  background-color: var(--nix-grey-secondary);
+  .header {
+    background-color: var(--nix-white);
+    height: 80px;
+    display: flex;
+    align-items: center;
+    padding: 0 50px;
+    img {
+      width: 150px;
+    }
+  }
+  .body {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+    .card {
+      width: 768px;
+      height: 534px;
+      background-color: var(--nix-white);
+      border-radius: 8px;
+      margin-top: -80px;
+      .card-content {
+        color: var(--nix-grey-primary);
+        display: grid;
+        justify-items: center;
+        height: inherit;
+        padding: 32px !important;
+        .header-title {
+          width: -webkit-fill-available;
+          button {
+            float: right;
+            margin-right: 46px;
+            margin-top: -28px;
+          }
+          h3 {
+            color: var(--nix-black);
+            font-weight: 600;
+            display: flex;
+            justify-content: center;
+          }
+        }
+        .actions {
+          margin-top: 32px;
+          .companies {
+            position: relative;
+            display: flex;
+          }
+          .plans {
+            position: relative;
+            display: flex;
+          }
+          .mat-form-field {
+            width: 457px;
+          }
+          button {
+            width: 150px;
+            margin-left: 16px;
+            height: 47px;
+            margin-top: 6px;
+          }
+        }
+        .info {
+          display: flex;
+          padding-left: 22px;
+          .title {
+            color: var(--nix-black);
+          }
+          .text-message {
+            margin-top: 16px !important;
+            color: var(--nix-black-02);
+            width: 413px;
+          }
+          .right {
+            margin-left: 32px;
+          }
+        }
+      }
+    }
+  }
+}

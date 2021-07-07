@@ -1,0 +1,44 @@
+<div class="card">
+      <div class="undisabled"><h3 class="bold">Fluxo de caixa</h3></div>
+    <div class="header-card">
+      <h3 class="bold disabled">Fluxo de caixa</h3>
+      <mat-form-field [formGroup]="range" class="material-form-date" appearance="outline">
+        <mat-label>Período inicial</mat-label>
+        <input
+          matInput
+          class="datepicker-input"
+          [matDatepicker]="start"
+          name="start"
+          id="start"
+          (click)="start.open()"
+          placeholder="Data Inicial"
+          formControlName="start"
+          readonly
+          (dateChange)="checkPeriod()"
+        />
+        <mat-datepicker-toggle matSuffix [for]="start"></mat-datepicker-toggle>
+        <mat-datepicker #start disabled="false"></mat-datepicker>
+      </mat-form-field>
+      <div class="amount">Saldo: {{ startAmount | currency}}</div>
+      <div class="amount">até</div>
+      <mat-form-field [formGroup]="range" class="material-form-date" appearance="outline">
+        <mat-label>Período final</mat-label>
+        <input
+          matInput
+          class="datepicker-input"
+          [matDatepicker]="end"
+          name="end"
+          id="end"
+          (click)="end.open()"
+          placeholder="Data final"
+          formControlName="end"
+          readonly
+          (dateChange)="checkPeriod()"
+        />
+        <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
+        <mat-datepicker #end disabled="false"></mat-datepicker>
+      </mat-form-field>
+      <div class="amount">Saldo: {{ endAmount | currency}}</div>
+    </div>
+    <div id="chartdiv" style="width: 100%; height: 500px"></div>
+  </div>

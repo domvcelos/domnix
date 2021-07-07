@@ -1,0 +1,109 @@
+.content {
+  width: 100%;
+  height: 100%;
+  background-color: var(--nix-grey-secondary);
+  .header {
+    background-color: var(--nix-white);
+    height: 80px;
+    display: flex;
+    align-items: center;
+    padding: 0 50px;
+    img {
+      width: 150px;
+    }
+  }
+  .body {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+    .card {
+      width: 1200px;
+      height: 534px;
+      background-color: var(--nix-white);
+      border-radius: 8px;
+      margin-top: -80px;
+      .card-content {
+        color: var(--nix-grey-primary);
+        justify-items: center;
+        height: inherit;
+        padding: 32px !important;
+        .card-head {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          a {
+            text-decoration: none;
+            color: var(--nix-black);
+            img {
+              vertical-align: bottom;
+            }
+          }
+          h3 {
+            color: var(--nix-black);
+            font-weight: 600;
+          }
+          button {
+            width: 150px;
+            color: initial;
+          }
+        }
+        .card-sub-head {
+          display: flex;
+          justify-content: center;
+          margin-top: 50px;
+          p {
+            color: var(--nix-black);
+            margin-right: 16px !important;
+            align-self: flex-end;
+          }
+          button {
+            height: 28px;
+          }
+          .main-button {
+            color: initial;
+            margin-right: 8px !important;
+          }
+          .main-button-inverse {
+            width: 150px;
+          }
+        }
+        .container {
+          margin-top: 32px;
+          display: flex;
+          justify-content: center;
+          .right-table {
+            margin-right: 32px;
+          }
+          .table-container {
+            width: 911px;
+            tr {
+              height: 29px;
+            }
+            table td:nth-child(2), th:nth-child(2) { 
+              border-left: 1px solid #E7E8E8; 
+            }
+            table td:nth-child(4), th:nth-child(4) { 
+              border-right: 1px solid #E7E8E8;
+            }
+            table th:nth-child(2), th:nth-child(3), th:nth-child(4) { 
+              border-top: 1px solid #E7E8E8; 
+            }
+            table tr:last-child td:nth-child(2), td:nth-child(3), td:nth-child(4)  { 
+              border-bottom: 1px solid #E7E8E8 !important; 
+            }
+            .nix-empresas-group {
+              border-top: none !important;
+              border-left: none !important;
+              border-right: none !important;
+              vertical-align: bottom;
+              color: var(--nix-green-02);
+            }
+          }
+        }
+      }
+    }
+  }
+}

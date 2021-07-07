@@ -1,0 +1,23 @@
+# generated directories
+.tmp
+.vscode
+.idea
+.gitconfig
+bower_components
+built
+dist
+dist-zip
+node_modules
+npm-debug.log
+coverage
+/nbproject/private/
+/nbproject/project.xml
+/nbproject/project.properties
+/text-summary.txt
+/srcbuilt/
+/builtsrc/
+/bkp/
+/nbproject/
+/plato/
+yarn.lock
+package-lock.json

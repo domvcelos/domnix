@@ -1,0 +1,29 @@
+<div class="content">
+  <div class="card">
+      <div class="logo">
+        <img src="../../../assets/{{logo+'.svg'}}" alt="nix" name="logo-nix" (error) ="onImgError($event)"/>
+      </div>
+      <div>
+        <mat-form-field class="material-form select-form" appearance="outline">
+          <mat-label>Qual o tipo de empresa</mat-label>
+          <mat-select 
+            name="type"
+            required
+            [(ngModel)]="selectedType"
+          >
+            <mat-option
+              *ngFor="let type of establishmentTypes"
+              [value]="type.value"
+              [ng]
+            >
+              {{ type.label}}
+            </mat-option>
+          </mat-select>
+          </mat-form-field>
+        </div>
+        <div>
+          <button class="main-button" (click)="next()">Próximo</button>
+        </div>
+        
+  </div>
+</div>

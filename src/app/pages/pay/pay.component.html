@@ -1,0 +1,156 @@
+<div class="action-bar-header">
+  <div class="inside-nav"><a [routerLink]="['/home']">Home</a> > Pagar</div>
+  <div class="action-bar">
+    <app-action-bar></app-action-bar>
+  </div>
+</div>
+<div class="content">
+  <div class="card">
+    <div class="loading-shade" *ngIf="loading">
+      <mat-spinner></mat-spinner>
+    </div>
+    <h3 class="bold-text">Pagamento por boleto bancário</h3>
+    <section>
+      <mat-form-field class="material-form" appearance="outline">
+        <mat-label>Insira o código de Barras a ser pago aqui</mat-label>
+        <input
+          type="text"
+          matInput
+          name="barcode"
+          [formControl]="codeBarFormControl"
+          maxlength="60"
+          mask="0{48}"
+          [validation]="false"
+          (change)="checkBarCode()"
+          (blur)="checkBarCode()"
+          autocomplete="off"
+        />
+        <mat-hint align="end"
+          >{{ codeBarFormControl.value?.length }} dígitos</mat-hint
+        >
+      </mat-form-field>
+
+      <mat-accordion multi>
+        <mat-expansion-panel hideToggle [expanded]="panelOpenState">
+          <div class="pay-title" *ngIf="codeBarFormControl.value && codeBarFormControl.value?.length > 0">
+            <h3 class="bold">Pagamento de Boleto</h3>
+          </div>
+          <div class="pay-body" *ngIf="billet">
+            <div class="pay-body-data">
+              <div *ngIf="billet.billetDetails.dueDate">
+                <p class="regular-regular">Data de vencimento:</p>
+                <p class="regular-bold">
+                  {{ billet.billetDetails.dueDate | date: 'dd/MM/yyyy' }}
+                </p>
+              </div>
+              <div>
+                <p class="regular-regular">Data de pagamento:</p>
+                <p class="regular-bold">{{ today | date: 'dd/MM/yyyy' }}</p>
+              </div>
+              <div class="digitable-line" *ngIf="billet.digitable_line">
+                <p class="regular-regular">Código de barras digitado:</p>
+                <p class="regular-bold">
+                  {{
+                    billet.digitable_line | mask: billet.digitable_line_masked
+                  }}
+                </p>
+              </div>
+            </div>
+            <div class="pay-body-value">
+              <div class="left">
+                <div>
+                  <p class="regular-regular">Valor:</p>
+                  <p class="regular-bold">
+                    {{ billet.billetDetails.amount | currency }}
+                  </p>
+                </div>
+                <div>
+                  <p class="regular-regular">Taxa:</p>
+                  <p class="regular-bold">
+                    {{ getFeeValue() | currency }}
+                  </p>
+                </div>
+                <div>
+                  <p class="regular-regular">Total:</p>
+                  <p class="large-bold">
+                    {{ getTotalValue() | currency }}
+                  </p>
+                </div>
+              </div>
+              <div class="right">
+                <mat-form-field class="material-form" appearance="outline">
+                  <mat-label>Escolha uma forma de pagamento</mat-label>
+                  <mat-select
+                    id="payment-select"
+                    [formControl]="paymentSelectFormControl"
+                    name="payment-select"
+                    (selectionChange)="onChangeSelect()"
+                  >
+                    <mat-option
+                      *ngFor="let item of listSelect"
+                      [value]="item.payment_type"
+                    >
+                      {{ item.label }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <div class="credit-card-confirm" *ngIf="digitalAccountSelected">
+                  <p class="large-regular">Seu saldo é de:</p>
+                  <p class="large-regular">
+                    {{ digitalAccount.balance.available.amount | currency }}
+                  </p>
+                </div>
+                <div
+                  class="credit-card-confirm"
+                  *ngIf="payService.getCurrentCard"
+                >
+                  <p class="large-regular">Cartão de crédito:</p>
+                  <p class="large-regular">
+                    {{ payService.getCurrentCard.number | creditCard }}
+                  </p>
+                </div>
+              </div>
+            </div>
+            <form
+              [formGroup]="amountFormGroup"
+              class="value-inputs"
+              *ngIf="displayAmountInputs"
+            >
+              <mat-form-field appearance="outline">
+                <mat-label>Valor Cartão de crédito</mat-label>
+                <input
+                  type="text"
+                  matInput
+                  name="creditAmount"
+                  required
+                  formControlName="creditAmount"
+                  currencyMask
+                  
+                  (keyup)="keyupCreditValue($event)"
+                />
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Valor Conta Nix</mat-label>
+                <input
+                  type="text"
+                  matInput
+                  name="nixAmount"
+                  required
+                  formControlName="nixAmount"
+                  currencyMask
+                  
+                  (keyup)="keyupNixValue($event)"
+                />
+              </mat-form-field>
+            </form>
+            <div class="actions">
+              <button class="main-button" name="payment-btn" [disabled]="!isValidPayment()" (click)="payment()">
+                Realizar pagamento
+              </button>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </section>
+  </div>
+</div>

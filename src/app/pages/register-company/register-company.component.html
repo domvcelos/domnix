@@ -1,0 +1,505 @@
+<div class="content">
+  <div class="header">
+    <img src="../../../assets/nix-empresas-logo-black.svg" />
+  </div>
+  <div class="body">
+    <div class="card">
+      <mat-horizontal-stepper linear labelPosition="bottom">
+        <mat-step>
+          <ng-template matStepLabel>Bem-vindo ao Nix Empresas</ng-template>
+          <div class="tour-step">
+            <p class="regular-light" style="text-align: center">
+              Para ativação de sua conta e garantia de segurança nas transações
+              financeiras é necessário fazer um cadastro bem rápido sobre a
+              empresa e os dados bancários. Não se preocupe que os dados estão
+              armazenados com segurança de acordo com a LGPD.
+            </p>
+
+            <button
+              class="main-button tour-btn"
+              mat-button
+              matStepperNext
+              id="start-btn"
+            >
+              Iniciar meu cadastro
+            </button>
+          </div>
+        </mat-step>
+        <mat-step [stepControl]="companyFormGroup">
+          <form [formGroup]="companyFormGroup">
+            <ng-template matStepLabel>Dados da Empresa</ng-template>
+            <h3 class="bold">Dados da Empresa</h3>
+            <p class="regular-light">
+              Preencha os campos abaixo conforme os dados de sua empresa
+            </p>
+            <div class="wrapper-form-field">
+              <mat-form-field class="material-form" appearance="outline">
+                <mat-label>Razão Social</mat-label>
+                <input
+                  type="text"
+                  matInput
+                  name="razaoSocial"
+                  required
+                  formControlName="razaoSocial"
+                  autocomplete="off"
+                />
+                <mat-error>
+                  <p
+                    *ngIf="
+                      companyFormGroup.controls['razaoSocial'].errors?.required
+                    "
+                  >
+                    Razão Social é um campo obrigatório.
+                  </p>
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="material-form" appearance="outline">
+                <mat-label>Nome Fantasia</mat-label>
+                <input
+                  type="text"
+                  matInput
+                  name="nomeFantasia"
+                  required
+                  formControlName="nomeFantasia"
+                  autocomplete="off"
+                />
+                <mat-error>
+                  <p
+                    *ngIf="
+                      companyFormGroup.controls['nomeFantasia'].errors?.required
+                    "
+                  >
+                    Nome Fantasia é um campo obrigatório.
+                  </p>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="wrapper-form-field">
+              <mat-form-field class="material-form" appearance="outline">
+                <mat-label>CNPJ</mat-label>
+                <input
+                  type="text"
+                  matInput
+                  name="cnpj"
+                  required
+                  formControlName="cnpj"
+                  mask="00.000.000/0000-00"
+                  autocomplete="off"
+                />
+                <mat-error>
+                  <p *ngIf="companyFormGroup.controls['cnpj'].errors?.required">
+                    CNPJ é um campo obrigatório.
+                  </p>
+                  <p
+                    *ngIf="
+                      companyFormGroup.controls['cnpj'].errors?.mask ||
+                      companyFormGroup.controls['cnpj'].errors?.invalidCnpj
+                    "
+                  >
+                    CNPJ inválido.
+                  </p>
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="material-form" appearance="outline">
+                <mat-label>Inscrição estadual</mat-label>
+                <input
+                  type="text"
+                  matInput
+                  name="inscricaoEstadual"
+                  formControlName="inscricaoEstadual"
+                  mask="9{12}"
+                  autocomplete="off"
+                />
+              </mat-form-field>
+            </div>
+            <mat-form-field class="material-form" appearance="outline">
+              <mat-label>Atividades da empresa</mat-label>
+              <input
+                type="text"
+                matInput
+                formControlName="activity"
+                [matAutocomplete]="autoActivity"
+                required
+                name="activity"
+              />
+              <mat-autocomplete
+                #autoActivity="matAutocomplete"
+                [displayWith]="displayActivityFn"
+              >
+                <mat-option
+                  *ngFor="let option of activityFilteredOptions | async"
+                  [value]="option"
+                >
+                  {{ option.name }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <div class="actions-buttons">
+              <button
+                class="main-button-inverse"
+                mat-button
+                matStepperPrevious
+                name="back-button"
+              >
+                Voltar
+              </button>
+              <button
+                class="main-button"
+                mat-button
+                id="companyInfo-btn"
+                (click)="next(companyFormStep.companyInfo)"
+              >
+                Próximo
+              </button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="companyAdrressFormGroup">
+          <ng-template matStepLabel>Endereço da Empresa</ng-template>
+          <h3 class="bold">Endereço da empresa</h3>
+          <p class="regular-light">
+            Preencha os campos abaixo conforme os dados de sua empresa
+          </p>
+          <form [formGroup]="companyAdrressFormGroup">
+            <div class="company-adrress-grid">
+              <div class="first-grid">
+                <mat-form-field class="material-form w20" appearance="outline">
+                  <mat-label>CEP</mat-label>
+                  <input
+                    type="text"
+                    matInput
+                    name="zipCode"
+                    required
+                    formControlName="zipCode"
+                    mask="00000-000"
+                    autocomplete="off"
+                    (blur)="fetchAddress()"
+                  />
+                  <mat-error>
+                    <p
+                      *ngIf="
+                        companyAdrressFormGroup.controls['zipCode'].errors
+                          ?.required
+                      "
+                    >
+                      CEP é um campo obrigatório.
+                    </p>
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="material-form w20" appearance="outline">
+                  <mat-label>Número</mat-label>
+                  <input
+                    type="text"
+                    matInput
+                    name="number"
+                    required
+                    formControlName="number"
+                    autocomplete="off"
+                    mask="0*"
+                  />
+                  <mat-error>
+                    <p
+                      *ngIf="
+                        companyAdrressFormGroup.controls['number'].errors
+                          ?.required
+                      "
+                    >
+                      Número é um campo obrigatório.
+                    </p>
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="material-form w16" appearance="outline">
+                  <mat-label>Cidade</mat-label>
+                  <input
+                    type="text"
+                    matInput
+                    name="city"
+                    required
+                    formControlName="city"
+                    autocomplete="off"
+                  />
+                  <mat-error>
+                    <p
+                      *ngIf="
+                        companyAdrressFormGroup.controls['city'].errors
+                          ?.required
+                      "
+                    >
+                      Cidade é um campo obrigatório.
+                    </p>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="second-grid">
+                <mat-form-field class="material-form" appearance="outline">
+                  <mat-label>Endereço</mat-label>
+                  <input
+                    type="text"
+                    matInput
+                    name="street"
+                    required
+                    formControlName="street"
+                    autocomplete="off"
+                  />
+                  <mat-error>
+                    <p
+                      *ngIf="
+                        companyAdrressFormGroup.controls['street'].errors
+                          ?.required
+                      "
+                    >
+                      Endereço é um campo obrigatório.
+                    </p>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="third-grid">
+                <mat-form-field class="material-form" appearance="outline">
+                  <mat-label>Complemento</mat-label>
+                  <input
+                    type="text"
+                    matInput
+                    name="complement"
+                    autocomplete="off"
+                  />
+                </mat-form-field>
+              </div>
+              <div class="fourth-grid">
+                <mat-form-field class="material-form" appearance="outline">
+                  <mat-label>Bairro</mat-label>
+                  <input
+                    type="text"
+                    matInput
+                    name="neighborhood"
+                    required
+                    formControlName="neighborhood"
+                    autocomplete="off"
+                  />
+                  <mat-error>
+                    <p
+                      *ngIf="
+                        companyAdrressFormGroup.controls['neighborhood'].errors
+                          ?.required
+                      "
+                    >
+                      Bairro é um campo obrigatório.
+                    </p>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="fifth-grid">
+                <mat-form-field class="material-form w26" appearance="outline">
+                  <mat-label>Estado</mat-label>
+                  <mat-select
+                    id="state"
+                    formControlName="state"
+                    name="state"
+                    required
+                  >
+                    <mat-option
+                      *ngFor="let state of states"
+                      [value]="state.value"
+                    >
+                      {{ state.viewValue }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>
+                    <p
+                      *ngIf="
+                        companyAdrressFormGroup.controls['state'].errors
+                          ?.required
+                      "
+                    >
+                      Estado é um campo obrigatório.
+                    </p>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="actions-buttons">
+              <button
+                class="main-button-inverse"
+                mat-button
+                matStepperPrevious
+                name="back-button"
+              >
+                Voltar
+              </button>
+              <button
+                class="main-button"
+                mat-button
+                id="companyAddress-btn"
+                (click)="next(companyFormStep.companyAddress)"
+              >
+                Próximo
+              </button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="companyBankFormGroup">
+          <ng-template matStepLabel>Dados Bancários</ng-template>
+          <h3 class="bold">
+            Falta pouco! Precisamos agora dos dados bancários
+          </h3>
+          <form [formGroup]="companyBankFormGroup">
+            <div class="wrapper-form">
+              <span>
+                <mat-form-field class="material-form" appearance="outline">
+                  <mat-label>Banco ou instituição</mat-label>
+                  <input
+                    type="text"
+                    matInput
+                    [matAutocomplete]="autoBank"
+                    name="bank"
+                    required
+                    formControlName="bank"
+                  />
+                  <mat-autocomplete
+                    #autoBank="matAutocomplete"
+                    [displayWith]="displayBankFn"
+                  >
+                    <mat-option
+                      *ngFor="let bankOption of bankFilteredOptions | async"
+                      [value]="bankOption"
+                    >
+                      {{ bankOption.long_name.toLocaleUpperCase() }}
+                    </mat-option>
+                  </mat-autocomplete>
+                  <mat-error>
+                    <p
+                      *ngIf="
+                        companyBankFormGroup.controls['bank'].errors?.required
+                      "
+                    >
+                      Banco ou instituição é um campo obrigatório.
+                    </p>
+                  </mat-error>
+                </mat-form-field>
+              </span>
+              <span>
+                <span>
+                  <mat-form-field class="material-form" appearance="outline">
+                    <mat-label>Agência</mat-label>
+                    <input
+                      type="text"
+                      matInput
+                      name="agency"
+                      required
+                      formControlName="agency"
+                      mask="0000"
+                      autocomplete="off"
+                    />
+                    <mat-error>
+                      <p
+                        *ngIf="
+                          companyBankFormGroup.controls['agency'].errors
+                            ?.required
+                        "
+                      >
+                        Agência é um campo obrigatório.
+                      </p>
+                    </mat-error>
+                  </mat-form-field>
+                  <div class="separator">-</div>
+                  <mat-form-field
+                    class="material-form dv dv-first"
+                    appearance="outline"
+                  >
+                    <mat-label>DV</mat-label>
+                    <input
+                      type="text"
+                      matInput
+                      name="agencyDv"
+                      formControlName="agencyDv"
+                      mask="0"
+                      autocomplete="off"
+                    />
+                  </mat-form-field>
+                </span>
+                <span>
+                  <mat-form-field class="material-form" appearance="outline">
+                    <mat-label>Conta</mat-label>
+                    <input
+                      type="number"
+                      matInput
+                      name="account"
+                      required
+                      formControlName="account"
+                      min="4"
+                      max="10"
+                      autocomplete="off"
+                    />
+                    <mat-error>
+                      <p
+                        *ngIf="
+                          companyBankFormGroup.controls['account'].errors
+                            ?.required
+                        "
+                      >
+                        Conta é um campo obrigatório.
+                      </p>
+                      <p
+                        *ngIf="
+                          companyBankFormGroup.controls['account'].errors
+                            ?.pattern
+                        "
+                      >
+                        Somente números.
+                      </p>
+                      <p
+                        *ngIf="
+                          companyBankFormGroup.controls['account'].errors
+                            ?.required
+                        "
+                      >
+                        Dígito da conta é um campo obrigatório.
+                      </p>
+                    </mat-error>
+                  </mat-form-field>
+                  <div class="separator">-</div>
+                  <mat-form-field class="material-form dv" appearance="outline">
+                    <mat-label>DV</mat-label>
+                    <input
+                      type="text"
+                      matInput
+                      name="accountDv"
+                      required
+                      formControlName="accountDv"
+                      mask="0"
+                      autocomplete="off"
+                    />
+                  </mat-form-field>
+                </span>
+              </span>
+            </div>
+            <div class="actions-buttons">
+              <button
+                class="main-button-inverse"
+                mat-button
+                matStepperPrevious
+                name="back-button"
+              >
+                Voltar
+              </button>
+              <button
+                class="main-button"
+                mat-button
+                id="companyBank-btn"
+                (click)="next(companyFormStep.companyBank)"
+              >
+                Próximo
+              </button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Concluído</ng-template>
+          <div class="response-content">
+            <img src="../../../../assets/icons/success.svg" />
+            <p class="regular-light">Seu contato foi cadastrado com sucesso!</p>
+          </div>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,141 @@
+<mat-dialog-content>
+  <div class="close-wrapper">
+    <button mat-button mat-dialog-close *ngIf="!loading" name="modal-close-btn">
+      <img src="../../../../assets/icons/close-square.svg" />
+    </button>
+  </div>
+  <div class="content">
+    <div class="loading-shade" *ngIf="loading">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="logo">
+      <img src="../../../../../assets/nix-empresas-logo-black.svg" />
+    </div>
+    <div class="recipient">
+      <span>
+        <p class="large-light">Destinatário</p>
+        <h3 class="bold">{{ checkOutOrder.payer_name }}</h3>
+      </span>
+    </div>
+    <div class="recipient-details">
+      <span>
+        <p class="large-light">Valor da cobrança:</p>
+        <p class="large-light">{{ checkOutOrder.amount | currency }}</p>
+      </span>
+      <span *ngIf="checkOutOrder.shipping">
+        <p class="large-light">Frete:</p>
+        <p class="large-light">{{ checkOutOrder.shipping | currency }}</p>
+      </span>
+      <span>
+        <p class="large-light">Desconto:</p>
+        <p class="large-light">{{ getDiscount() | currency }}</p>
+      </span>
+      <span *ngIf="checkOutOrder.transaction_type == 'payment_book'">
+        <p class="large-light">Parcelas:</p>
+        <p class="large-light">
+          {{ checkOutOrder.numberOfBills }} x {{ getBillValue() | currency }}
+        </p>
+      </span>
+      <span>
+        <p class="large-light">Total a ser pago pelo cliente:</p>
+        <h3 class="bold">{{ getTotalToPay() | currency }}</h3>
+      </span>
+      <hr />
+      <span>
+        <p class="large-light">Forma de Pagamento:</p>
+        <p
+          class="large-light alternative-text"
+          *ngIf="checkOutOrder.transaction_type == 'BILLET'"
+        >
+          Boleto
+        </p>
+        <p
+          class="large-light alternative-text"
+          *ngIf="checkOutOrder.transaction_type == 'CREDIT_CARD'"
+        >
+          Cartão de crédito
+        </p>
+        <p
+          class="large-light alternative-text"
+          *ngIf="checkOutOrder.transaction_type == 'NIX_ACCOUNT'"
+        >
+          Conta Nix
+        </p>
+        <p
+          class="large-light alternative-text"
+          *ngIf="checkOutOrder.transaction_type == 'ALL'"
+        >
+          Todas opções
+        </p>
+        <p
+          class="large-light alternative-text"
+          *ngIf="checkOutOrder.transaction_type == 'payment_book'"
+        >
+          Carnê
+        </p>
+      </span>
+      <span *ngIf="checkOutOrder.transaction_type != 'ALL'">
+        <p class="large-light">Taxa:</p>
+        <p
+          class="large-light"
+          *ngIf="checkOutOrder.transaction_type == 'payment_book'"
+        >
+          {{ checkOutOrder.numberOfBills }} x {{ getTax() | currency }}
+        </p>
+        <p
+          class="large-light"
+          *ngIf="checkOutOrder.transaction_type != 'payment_book'"
+        >
+          {{ getTax() | currency }}
+        </p>
+      </span>
+      <ul *ngIf="checkOutOrder.transaction_type == 'ALL'">
+        <li>
+          <p class="large-light">- Taxa cartão de crédito:</p>
+          <p class="large-light">{{ getTax('CREDIT_CARD') | currency }}</p>
+        </li>
+        <li>
+          <p class="large-light">- Taxa boleto:</p>
+          <p class="large-light">{{ getTax('BILLET') | currency }}</p>
+        </li>
+        <li>
+          <p class="large-light">- Taxa conta Nix:</p>
+          <p class="large-light">{{ getTax() | currency }}</p>
+        </li>
+      </ul>
+      <div
+        *ngIf="checkOutOrder.transaction_type != 'ALL'"
+        style="align-self: normal"
+      >
+        <span>
+          <p class="large-light">Total a receber:</p>
+          <h3 class="bold">{{ getTotalToReceive() | currency }}</h3>
+        </span>
+      </div>
+      <div
+        *ngIf="checkOutOrder.transaction_type == 'ALL'"
+        style="align-self: normal"
+      >
+        <span>
+          <p class="large-light">Total a receber por cartão de crédito:</p>
+          <h3 class="bold">
+            {{ getTotalToReceive('CREDIT_CARD') | currency }}
+          </h3>
+        </span>
+        <span>
+          <p class="large-light">Total a receber por boleto:</p>
+          <h3 class="bold">{{ getTotalToReceive('BILLET') | currency }}</h3>
+        </span>
+        <span>
+          <p class="large-light">Total a receber por conta Nix:</p>
+          <h3 class="bold">{{ getTotalToReceive() | currency }}</h3>
+        </span>
+      </div>
+      <span style="justify-content: center">
+        <button class="main-button" (click)="onButtonClick()" id="send-confirmation-btn">
+          Confirmar e enviar o link de cobrança
+        </button>
+      </span>
+    </div>
+  </div>
+</mat-dialog-content>

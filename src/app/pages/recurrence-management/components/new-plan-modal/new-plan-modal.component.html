@@ -1,0 +1,191 @@
+<mat-dialog-content>
+  <div class="close-wrapper">
+    <button
+      mat-button
+      [mat-dialog-close]="savedPlan"
+      *ngIf="!loading"
+      name="modal-close-btn"
+    >
+      <img src="../../../../assets/icons/close-square.svg" />
+    </button>
+  </div>
+  <div class="content">
+    <div class="loading-shade" *ngIf="loading">
+      <mat-spinner></mat-spinner>
+    </div>
+    <mat-horizontal-stepper linear #stepper labelPosition="bottom">
+      <mat-step [stepControl]="recurrencePlanFormGroup">
+        <form [formGroup]="recurrencePlanFormGroup">
+          <ng-template matStepLabel>{{
+            isEditMode ? 'Edição' : 'Cadastro'
+          }}</ng-template>
+          <h3 class="bold">
+            {{ isEditMode ? 'Editar plano' : 'Cadastrar novo plano' }}
+          </h3>
+          <div class="form-wrapper">
+            <div class="one">
+              <mat-form-field class="material-form" appearance="outline">
+                <mat-label>Nome</mat-label>
+                <input matInput formControlName="name" name="name" required />
+              </mat-form-field>
+            </div>
+            <div class="two">
+              <mat-form-field class="material-form" appearance="outline">
+                <mat-label>Frequência</mat-label>
+                <mat-select name="interval" required formControlName="interval">
+                  <mat-option
+                    *ngFor="let interval of intervals"
+                    [value]="interval.id"
+                  >
+                    {{ interval.label }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="three">
+              <mat-form-field class="material-form" appearance="outline">
+                <mat-label>Descrição</mat-label>
+                <textarea
+                  name="description"
+                  type="text"
+                  matInput
+                  required
+                  formControlName="description"
+                ></textarea>
+              </mat-form-field>
+            </div>
+            <div class="four">
+              <mat-form-field class="material-form" appearance="outline">
+                <mat-label>Valor (R$)</mat-label>
+                <input
+                  matInput
+                  formControlName="amount"
+                  required
+                  currencyMask
+                  name="amount"
+                  
+                />
+              </mat-form-field>
+            </div>
+            <div class="five">
+              <mat-form-field class="material-form" appearance="outline">
+                <mat-label>Situação atual do plano</mat-label>
+                <mat-select name="active" required formControlName="active">
+                  <mat-option name="true" [value]="true">Ativo</mat-option>
+                  <mat-option name="false" [value]="false">Inativo</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button
+              class="main-button-inverse"
+              mat-button
+              mat-dialog-close
+            >
+              Cancelar
+            </button>
+            <button
+              class="main-button"
+              name="save-plan-btn"
+              id="id-save-plan-btn"
+              mat-button
+              matStepperNext
+              [disabled]="isEditMode && isAmountsEqual()"
+            >
+              {{ isEditMode ? 'Editar plano' : 'Cadastrar plano' }}
+            </button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Confirmação</ng-template>
+        <div class="content">
+          <div class="logo">
+            <img src="../../../../../assets/nix-empresas-logo-black.svg" />
+          </div>
+          <div class="recipient-data">
+            <span>
+              <p class="large-light">Nome do Plano</p>
+              <h3 class="bold">
+                {{ recurrencePlanFormGroup.controls['name'].value }}
+              </h3>
+            </span>
+          </div>
+          <div class="confirm-data">
+            <!-- <span>
+              <p class="large-light">Valor da cobrança:</p>
+              <p class="large-light">{{ checkOutOrder.amount | currency }}</p>
+            </span>
+            <span *ngIf="checkOutOrder.shipping">
+              <p class="large-light">Frete:</p>
+              <p class="large-light">{{ checkOutOrder.shipping | currency }}</p>
+            </span>
+            <span>
+              <p class="large-light">Desconto:</p>
+              <p class="large-light">{{ checkOutOrder.discount | currency }}</p>
+            </span> -->
+            <span>
+              <p class="large-light">Valor da assinatura {{ getInterval() }}</p>
+              <p class="large-light">
+                {{ recurrencePlanFormGroup.value.amount | currency }}
+              </p>
+            </span>
+            <span>
+              <p class="large-light">Total a ser pago pelo cliente:</p>
+              <h3 class="bold">
+                {{ recurrencePlanFormGroup.value.amount | currency }}
+              </h3>
+            </span>
+            <hr />
+            <span>
+              <p class="large-light alternative-text">Pagamento com boleto</p>
+            </span>
+            <span>
+              <p class="large-light">Taxa</p>
+              <p class="large-light">{{ billetFee | currency }}</p>
+            </span>
+            <span>
+              <p class="large-light">Total a receber:</p>
+              <h3 class="bold">
+                {{
+                  recurrencePlanFormGroup.value.amount - billetFee | currency
+                }}
+              </h3>
+            </span>
+            <span>
+              <button
+                mat-button
+                class="main-button bold"
+                name="confirm-btn"
+                id="id-newplan-confirm-btn"
+                (click)="savePlan()"
+              >
+                Confirmar {{ isEditMode ? 'edição' : 'cadastro' }} do plano
+              </button>
+              <button
+                mat-button
+                matStepperPrevious
+                class="a-button"
+                name="back-btn"
+                id="id-newplan-back-btn"
+              >
+                Voltar
+              </button>
+            </span>
+          </div>
+        </div>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Concluído</ng-template>
+        <div class="response-content" *ngIf="true">
+          <img src="../../../../assets/icons/success.svg" />
+          <p class="regular-light">
+            Plano {{ isEditMode ? 'editado' : 'cadastrado' }} com sucesso!
+          </p>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </div>
+</mat-dialog-content>

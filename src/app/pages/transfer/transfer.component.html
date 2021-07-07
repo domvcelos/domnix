@@ -1,0 +1,79 @@
+<div class="action-bar-header">
+    <span class="inside-nav"><a [routerLink]="['/home']">Home</a> > Transferir</span>
+    <div class="action-bar">
+      <app-action-bar></app-action-bar>
+    </div>
+  </div>
+  <div class="content">
+    <div class="card">
+      <div class="loading-shade" *ngIf="loading">
+        <mat-spinner></mat-spinner>
+      </div>
+      <section>
+        <h3 class="bold-text">Transferência</h3>
+      </section>
+      <section>
+        <fieldset>
+          <div *ngIf="!showPage && showSelectContact" class="contact-not-selected" >
+              <img src="../../../assets/icons/atention.svg" alt="atention-icon" width="50px"/>
+              <h3>Contato não selecionado</h3>
+              <p>Para realizar uma transferência, você precisa selecionar um contato em sua base de contatos.</p>
+              <button mat-button class="main-button" id="signin-not-complete-checkoutlink" (click)="openSelectContactModal()">Buscar um contato</button>
+          </div>
+          <form *ngIf="false">
+            <p class="regular-regular select-transfer-text">Selecione um tipo de transferência:</p>
+            <mat-form-field class="material-form" appearance="outline">
+                <mat-label>Selecione para onde vai o valor da transferência</mat-label>
+                <mat-select id="transfer-select" [formControl]="transferSelectFormControl" name="transfer-select" (selectionChange)="onChangeSelect()">
+                  <mat-option *ngFor="let item of listSelect" [value]="item.transfer_type">
+                    {{ item.label }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+          </form>
+              <form class="transfer-body" *ngIf="showPage" [formGroup]="form" #myForm="ngForm" (ngSubmit)="transfer(myForm)">
+                <p class="large-light transfer-contact-text">Destinatário</p>
+                <div class="contact-account">
+                  <p>{{destinataryName}}</p> <span class="small-regular">Pessoa {{isSendToCompany() ? 'jurídica' : 'física'}}</span>
+                    <a name="change-contact-btn" (click)="clearContact()"><img src="../../../assets/icons/close-square-black.svg"/></a>
+                </div>
+                <div class="contact-data regular-regular">
+                  <div>
+                    <label>CPF/CNPJ</label> <span>{{destinataryDocumentvalue | cpfCnpj}}</span>
+                  </div>
+                  <div>
+                    <label>Banco</label> <span>{{peopleBankAccounts ? getBankNameAndCode(peopleBankAccounts?.bank_number) : ''}}</span>
+                  </div>
+                  <div>
+                    <label>Agência</label> <span>{{peopleBankAccounts ? peopleBankAccounts?.account_branch : ''}}</span>
+                  </div>
+                  <div>
+                    <label>Conta</label> <span>{{peopleBankAccounts ? peopleBankAccounts?.account_number +' - '+peopleBankAccounts?.account_digit : ''}}</span>
+                  </div>
+                  <div>
+                    <label>Tipo de conta</label> <span>{{ getAccountType() }}</span>
+                  </div>
+                </div>
+                <div class="transfer-amount">
+                  <label class="large-regular">Valor a ser transferido (R$)</label> 
+                  <mat-form-field class="material-form" appearance="outline">
+                    <input type="text" matInput name="amount" autocomplete="off" formControlName="amount" min="10" required currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',' }"/>
+                    <mat-error>
+                      <p *ngIf="form.controls['amount'].errors?.required">Valor é um campo obrigatório.</p>
+                      <p *ngIf="form.controls['amount'].errors?.min">O valor mínimo é R$ 10,00.</p>
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="account-balance">
+                  <label class="regular-regular">Seu saldo é de:</label> <span class="regular-bold">{{balance | currency}}</span>
+                </div>
+                <div class="wrapper-button">
+                  <button class="main-button" [disabled]="form.invalid || !hasBalanceToTransfer()" type="submit" id="continue-transfer-btn">
+                    Continuar transferência
+                  </button>
+                </div>
+              </form>
+        </fieldset>
+      </section>
+    </div>
+  </div>

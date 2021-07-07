@@ -1,0 +1,54 @@
+<mat-dialog-content>
+  <div class="close-wrapper">
+    <button mat-button mat-dialog-close name="modal-close-btn" *ngIf="!loading"> 
+      <img src="../../../../assets/icons/close-square.svg" />
+    </button>
+  </div>
+  <div class="content">
+    <div class="loading-shade" *ngIf="loading">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="body">
+        <p class="large-bold">Selecione um contato para transferência</p>
+        <mat-form-field  class="material-form" appearance="outline">
+          <mat-label>Digite aqui Nome ou Razão Social</mat-label>
+          <input matInput type="text" [(ngModel)]="searchInput" (input)="onChangeSearch()" name="search-input" autocomplete="off">
+        </mat-form-field>
+
+        <div class="contact-list" *ngIf="filteredOptions.length !== 0">
+          <div mat-stroked-div class="contact-list-item" *ngFor="let option of filteredOptions" (click)="getSelectedSubPeople(option)">
+            <div class="top">
+              <p class="regular-bold name-p">
+                {{option.name}}
+              </p>
+              <span class="tag-document-type">{{option.document_type ==='CPF' ? 'Pessoa física': 'Pessoa jurídica'}}</span>
+            </div>
+            <div class="bottom">
+              <p class="extra-small-regular" *ngIf="option.document_type === 'CPF'">
+                CPF: {{option.document_value | cpfCnpj}}
+              </p>
+              <p class="extra-small-regular" *ngIf="option.document_type === 'CNPJ'">
+                CNPJ: {{option.document_value | cpfCnpj}}
+              </p>
+              <p class="extra-small-regular">
+                Email: {{option.email}}
+              </p>
+            </div>
+          </div>
+        </div>
+       
+        <div *ngIf="filteredOptions.length == 0 && !loading" class="div-error" >
+            <img src="../../../../../assets/icons/error.svg" alt="error-icon" width="60px"/>
+            <p class="large-regular">Nenhum usuário encontrado</p>
+            <p class="large-regular sub-text">Não foi possível encontrar o CPF ou CNPJ digitado.
+              Por favor, tente novamente.</p>
+
+          <div class="wrapper-button">
+          <button class="main-button" type="submit" id="new-contact-btn" (click)="newContact()">
+            Adicionar novo contato
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>

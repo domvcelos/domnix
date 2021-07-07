@@ -1,0 +1,96 @@
+import { IMenu } from './sidebar.model';
+
+export const MENULIST: IMenu[] = [
+  {
+    icon: 'home.svg',
+    label: 'home',
+    path: '/home',
+    id: 'sb-home',
+    subMenu: [],
+  },
+  {
+    icon: 'cart-plus.svg',
+    label: 'gestão de recorrências',
+    path: '/gestao-de-recorrencia',
+    id: 'sb-recurrences',
+    subMenu: [],
+  },
+  {
+    icon: 'card.svg',
+    label: 'Conciliação de cartões',
+    path: '/card/self-hiring',
+    id: 'sb-conciliation',
+    subMenu: [
+      {
+        icon: '',
+        label: 'Painel Geral',
+        path: '/card/dashboard',
+        id: 'sb-conciliation-dashboard',
+        subMenu: [],
+      },
+      {
+        icon: '',
+        label: 'Vendas',
+        path: '/card/sales',
+        id: 'sb-conciliation-sales',
+        subMenu: [],
+      },
+      {
+        icon: '',
+        label: 'Previsão de Recebimentos',
+        path: '/card/financial-forecast',
+        id: 'sb-conciliation-financial-forecast',
+        subMenu: [],
+      },
+      {
+        icon: '',
+        label: 'Recebimentos',
+        path: '/card/credits',
+        id: 'sb-conciliation-credits',
+        subMenu: [],
+      },
+      {
+        icon: '',
+        label: 'Ajustes',
+        path: '/card/adjustments',
+        id: 'sb-conciliation-adjustments',
+        subMenu: [],
+      },
+      {
+        icon: '',
+        label: 'Antecipações',
+        path: '/card/anticipations',
+        id: 'sb-conciliation-anticipations',
+        subMenu: [],
+      },
+      {
+        icon: '',
+        label: 'Taxas',
+        path: '/card/rates',
+        id: 'sb-conciliation-rates',
+        subMenu: [],
+      },
+    ],
+  },
+  {
+    icon: 'dollar.svg',
+    label: 'gestão de cobranças',
+    path: '/gestao-de-cobrancas',
+    id: 'sb-collection',
+    subMenu: [],
+  },
+  {
+    icon: 'doc.svg',
+    label: 'gestão de pagamentos',
+    path: '/gestao-de-pagamento',
+    id: 'sb-payment',
+    subMenu: [],
+  },
+  {
+    icon: 'contatos.svg',
+    label: 'contatos',
+    path: '/contatos',
+    id: 'sb-contact',
+    subMenu: [],
+  },
+];

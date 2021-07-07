@@ -1,0 +1,88 @@
+.content {
+  position: relative;
+  padding: 24px 100px;
+  .logo {
+    margin-bottom: 24px;
+  }
+  p {
+    color: var(--nix-grey-primary);
+    &.black {
+      color: var(--nix-black);
+    }
+  }
+  .recipient-details {
+    ul {
+      width: 100%;
+      padding-left: 15px;
+      margin-bottom: 16px;
+      li {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+      }
+    }
+  }
+}
+.form-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  p {
+    width: 60%;
+    text-align: center;
+  }
+  mat-form-field {
+    width: 300px;
+    margin-top: 30px;
+  }
+}
+.actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  button {
+    width: 270px;
+    height: 60px;
+    &:first-child {
+      margin-right: 10px;
+    }
+  }
+}
+.proof-title {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  p {
+    text-align: center;
+    &.black {
+      color: var(--nix-black);
+    }
+  }
+}
+.proof-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  span {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 100%;
+    &.vertical {
+      flex-direction: column;
+      justify-content: center;
+    }
+    &.center {
+      justify-content: center;
+    }
+  }
+  hr {
+    width: 100%;
+    margin-bottom: 30px;
+    margin-top: 15px;
+  }
+}

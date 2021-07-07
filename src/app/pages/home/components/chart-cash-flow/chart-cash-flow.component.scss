@@ -1,0 +1,45 @@
+.undisabled {
+  display: none !important;
+  margin-left: 48px;
+  margin-bottom: 8px;
+}
+div.card {
+  background-color: var(--nix-white);
+  border-radius: 8px;
+  padding: 20px;
+  position: relative;
+  .header-card {
+    display: flex;
+    align-items: baseline;
+    justify-items: stretch;
+    mat-form-field {
+      margin-left: 48px;
+    }
+  }
+}
+.amount {
+  font-family: 'Prompt', sans-serif !important;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0em;
+  text-align: left;
+  color: #888e8c;
+  margin-left: 24px;
+}
+
+@media only screen and (max-width: 1390px) {
+  .disabled {
+    display: none !important;
+  }
+  .undisabled {
+    display: inherit !important;
+  }
+}
+
+@media only screen and (max-width: 1230px) {
+  .amount {
+    font-size: 12px;
+  }
+}

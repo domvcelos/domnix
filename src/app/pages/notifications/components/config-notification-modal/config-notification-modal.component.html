@@ -1,0 +1,45 @@
+<mat-dialog-content style="width:fit-content;margin:auto;">
+  <div class="close-wrapper">
+    <button mat-button mat-dialog-close name="modal-close-btn">
+      <img src="../../../../assets/icons/close-square.svg" />
+    </button>
+  </div>
+  <div class="content">
+    <div class="loading-shade" *ngIf="loading">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="logo">
+      <img src="../../../../../assets/nix-empresas-logo-black.svg" />
+    </div>
+    <div class="header-section">
+      <span>
+        <p class="large-bold nix-black-02">Configurações</p>
+        <p class="regular-regular nix-black-03">Ative ou desative os tipos de notificações</p>
+      </span>
+    </div>
+    <div class="recipient-details">
+      <span>
+        <p class="regular-regular nix-black-02">Notificações de Depósito</p>
+        <p class="large-light">
+          <mat-slide-toggle [checked]="deposit" (change)="toggleDeposit($event)"> {{ deposit ? 'ativado' : 'desativado'}}</mat-slide-toggle>
+        </p>
+      </span>
+      <span>
+        <p class="regular-regular nix-black-02">Notificações de Transferência</p>
+        <p class="large-light">
+          <mat-slide-toggle [checked]="transfer" (change)="toggleTransfer($event)"> {{ transfer ? 'ativado' : 'desativado'}}</mat-slide-toggle>
+        </p>
+      </span>
+      <span>
+        <p class="regular-regular nix-black-02">Notificações de Cobrança</p>
+        <p class="large-light">
+          <mat-slide-toggle [checked]="charge" (change)="toggleCharge($event)"> {{ charge ? 'ativado' : 'desativado'}}</mat-slide-toggle>
+        </p>
+      </span>
+    </div>
+    <div class="actions">
+      <button mat-button class="main-button-inverse" (click)="cancel()">Cancelar</button>
+      <button mat-button class="main-button" (click)="saveConfigs()">Salvar alterações</button>
+    </div>
+  </div>
+</mat-dialog-content>

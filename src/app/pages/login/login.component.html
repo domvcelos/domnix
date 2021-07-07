@@ -1,0 +1,59 @@
+<div class="content">
+  <div class="card">
+    <span *ngIf="loading" class="loading-span">
+      <mat-spinner></mat-spinner>
+      <p class="loading-p">Aguarde, estamos validando seus dados...</p>
+    </span>
+    <span *ngIf="!loading">
+      <div class="logo">
+        <img src="../../../assets/{{logo+'.svg'}}" alt="nix" name="logo-nix" (error) ="onImgError($event)"/>
+      </div>
+      <form class="form" [formGroup]="loginFormGroup" (ngSubmit)="login()">
+        <mat-form-field class="material-form" appearance="outline">
+          <mat-label>Email ou CPF</mat-label>
+          <input
+            type="text"
+            matInput
+            name="user"
+            required
+            formControlName="user"
+          />
+          <mat-error>
+            <p *ngIf="loginFormGroup.controls['user'].errors?.required">
+              Email ou CPF é um campo obrigatório.
+            </p>
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field class="material-form" appearance="outline">
+          <mat-label>Senha</mat-label>
+          <input
+            type="password"
+            matInput
+            name="password"
+            required
+            formControlName="password"
+          />
+          <mat-error>
+            <p *ngIf="loginFormGroup.controls['password'].errors?.required">
+              Senha é um campo obrigatório.
+            </p>
+          </mat-error>
+        </mat-form-field>
+        <div class="actions">
+          <button class="main-button" type="submit" id="login-btn">Entrar</button>
+          <button
+            class="main-button-inverse"
+            type="button"
+            (click)="navigateTo('selecionar-tipo')"
+            id="new-account-btn"
+          >
+            Abrir uma conta NIX
+          </button>
+          <a class="regular-light" [routerLink]="['/recuperar-senha']" id="forgot-password-link"
+            >Esqueceu a senha? Clique aqui</a
+          >
+        </div>
+      </form>
+    </span>
+  </div>
+</div>

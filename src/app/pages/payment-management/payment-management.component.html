@@ -1,0 +1,289 @@
+<div class="content">
+  <div class="card">
+    <div class="tab-header">
+      <div class="title-section">
+        <div class="wrapper-title">
+          <h3 class="bold">Gestão de Pagamentos</h3>
+        </div>
+      </div>
+      <div class="search-section">
+        <form [formGroup]="filterRangeFormGroup">
+            <div class="div-search-separator">
+              <span class="span-search-separator">
+                <mat-form-field class="mat-form-field" appearance="outline">
+                  <mat-label>Pesquisar</mat-label>
+                  <span matPrefix
+                    >&nbsp;&nbsp;<img
+                      src="../../../assets/icons/search.svg"
+                      alt="search-icon"
+                    />&nbsp;&nbsp;</span
+                  >
+                  <input
+                    matInput
+                    placeholder="Nome, CPF/CNPJ, Linha digitável ou ID do Pagamento"
+                    formControlName="search"
+                  />
+                </mat-form-field>
+              </span>
+              <span class="span-search-separator">
+                <mat-form-field class="material-form-date" appearance="outline">
+                  <mat-label>Vencimento inicial</mat-label>
+                  <input
+                    matInput
+                    class="datepicker-input"
+                    [matDatepicker]="dueStartDate"
+                    name="dueStartDate"
+                    id="dueStartDate"
+                    (click)="dueStartDate.open()"
+                    placeholder="Data Inicial"
+                    formControlName="dueStartDate"
+                    readonly
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="dueStartDate"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker #dueStartDate disabled="false"></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field class="material-form-date" appearance="outline">
+                  <mat-label>Vencimento final</mat-label>
+                  <input
+                    matInput
+                    class="datepicker-input"
+                    [matDatepicker]="dueEndDate"
+                    name="dueEndDate"
+                    id="dueEndDate"
+                    (click)="dueEndDate.open()"
+                    placeholder="Data final"
+                    formControlName="dueEndDate"
+                    readonly
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="dueEndDate"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker #dueEndDate disabled="false"></mat-datepicker>
+                </mat-form-field>
+              </span>
+            </div>
+            <span class="expand-filter-separator">
+              <span>
+                <p class="expand-filter" (click)="openExpansion()" name="exapand-filter-btn">
+                  {{ exapansionText }}
+                </p>
+                <p class="expand-filter" (click)="clearForm()" name="clear-filter-btn">Limpar filtros</p>
+              </span>
+              <mat-accordion>
+                <mat-expansion-panel hideToggle [expanded]="panelOpenState">
+                  <div class="content">
+                    <span class="wrapper-date">
+                      <mat-form-field
+                        class="material-form-date accordion-fields"
+                        appearance="outline"
+                      >
+                        <mat-label>Pagamento inicial</mat-label>
+                        <input
+                          matInput
+                          [matDatepicker]="paymentStartDate"
+                          name="paymentStartDate"
+                          id="paymentStartDate"
+                          (click)="paymentStartDate.open()"
+                          placeholder="Data Inicial"
+                          formControlName="paymentStartDate"
+                          readonly
+                          class="datepicker-input"
+                        />
+                        <mat-datepicker-toggle
+                          matSuffix
+                          [for]="paymentStartDate"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker
+                          #paymentStartDate
+                          disabled="false"
+                        ></mat-datepicker>
+                      </mat-form-field>
+                      <mat-form-field
+                        class="material-form-date accordion-fields"
+                        appearance="outline"
+                      >
+                        <mat-label>Pagamento final</mat-label>
+                        <input
+                          matInput
+                          [matDatepicker]="PaymentndDate"
+                          name="PaymentndDate"
+                          id="PaymentndDate"
+                          (click)="PaymentndDate.open()"
+                          placeholder="Data final"
+                          formControlName="PaymentndDate"
+                          readonly
+                          class="datepicker-input"
+                        />
+                        <mat-datepicker-toggle
+                          matSuffix
+                          [for]="PaymentndDate"
+                        ></mat-datepicker-toggle>
+                        <mat-datepicker
+                          #PaymentndDate
+                          disabled="false"
+                        ></mat-datepicker>
+                      </mat-form-field>
+                    </span>
+                    <mat-form-field
+                      class="material-form accordion-fields"
+                      appearance="outline"
+                      style="margin-left: 30px"
+                    >
+                      <mat-label>Status</mat-label>
+                      <mat-select
+                        name="statusType"
+                        formControlName="statusType"
+                      >
+                        <mat-option
+                          *ngFor="let status of statusTypes"
+                          [value]="status.status_type"
+                        >
+                          {{ status.label }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                    <mat-form-field
+                      class="material-form accordion-fields"
+                      appearance="outline"
+                      style="margin-left: 15px"
+                    >
+                      <mat-label>Forma de pagamento</mat-label>
+                      <mat-select
+                        name="transactionType"
+                        formControlName="transactionType"
+                      >
+                        <mat-option
+                          *ngFor="let type of transactionTypes"
+                          [value]="type.payment_type"
+                        >
+                          {{ type.label }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+                </mat-expansion-panel>
+              </mat-accordion>
+            </span>
+          </form>
+      </div>
+    </div>
+    <div class="container">
+      <div class="loading-shade" *ngIf="loading">
+        <mat-spinner></mat-spinner>
+      </div>
+      <div class="table-container">
+        <table mat-table [dataSource]="dataSource">
+          <ng-container matColumnDef="select">
+            <th mat-header-cell *matHeaderCellDef>
+              <mat-checkbox
+                (change)="$event ? masterToggle() : null"
+                [checked]="selection.hasValue() && isAllSelected()"
+                name="selectall"
+                [indeterminate]="selection.hasValue() && !isAllSelected()"
+                [aria-label]="checkboxLabel()"
+              >
+              </mat-checkbox>
+            </th>
+            <td mat-cell *matCellDef="let row">
+              <mat-checkbox
+                (click)="$event.stopPropagation()"
+                name="selectrow"
+                (change)="$event ? selection.toggle(row) : null"
+                [checked]="selection.isSelected(row)"
+                [aria-label]="checkboxLabel(row)"
+              >
+              </mat-checkbox>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="payee_name">
+            <th mat-header-cell *matHeaderCellDef>Beneficiário</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.payee_name ? element.payee_name : '-' }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="payee_social_number">
+            <th mat-header-cell *matHeaderCellDef>CPF/CNPJ</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.payee_social_number ? (element.payee_social_number | cpfCnpj) : '-' }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="transaction_type">
+            <th mat-header-cell *matHeaderCellDef>Forma</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.transaction_type | paymentTransactionType }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="due_date">
+            <th mat-header-cell *matHeaderCellDef>Vencimento</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.due_date | date: 'dd/MM/yyyy' }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="payment_date">
+            <th mat-header-cell *matHeaderCellDef>Pagamento</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.payment_date ? (element.payment_date | date: 'dd/MM/yyyy') : '-' }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>Status</th>
+            <td
+              mat-cell
+              *matCellDef="let element"
+              [innerHtml]="element | statusPaymentColorful"
+            ></td>
+          </ng-container>
+
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef>Valor</th>
+            <td mat-cell *matCellDef="let element">
+              {{ element.amount | currency }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let row">
+              <button mat-button [matMenuTriggerFor]="menu" class="action" name="action">
+                <img src="../../../assets/icons/ellipsis.svg" />
+              </button>
+              <mat-menu #menu="matMenu">
+                <button mat-menu-item (click)="openDetailsModal(row)" name="info-modal-btn">Informações</button>
+                <button mat-menu-item (click)="openReceiptModal(row)" name="receipt-modal">Comprovante</button>
+              </mat-menu>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+      <div class="table-footer">
+        <button
+          mat-button
+          class="main-button"
+          [disabled]="!this.selection.selected.length"
+          name="download-btn"
+          (click)="printPayments()"
+        >
+          Fazer download
+        </button>
+        <mat-paginator
+          [length]="length"
+          [pageSize]="pageSize"
+          [pageSizeOptions]="pageSizeOptions"
+          showFirstLastButtons
+        ></mat-paginator>
+      </div>
+    </div>
+  </div>
+</div>

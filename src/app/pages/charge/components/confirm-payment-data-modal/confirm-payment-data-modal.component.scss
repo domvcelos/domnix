@@ -1,0 +1,21 @@
+.content {
+  position: relative;
+  p {
+    color: var(--nix-grey-primary);
+    &.black {
+      color: var(--nix-black);
+    }
+  }
+  .recipient-details{
+    ul{
+      width: 100%;
+      padding-left: 15px;
+      margin-bottom: 16px;
+      li{
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+      }
+    }
+  }
+}

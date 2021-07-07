@@ -1,0 +1,139 @@
+<div class="content">
+  <div class="content-left">
+    <div class="top-aside">
+      <div id="nav-container">
+        <div class="bg"></div>
+        <div class="button" tabindex="0">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </div>
+        <div id="nav-content" tabindex="0">
+          <app-sidebar></app-sidebar>
+        </div>
+      </div>
+      <img
+        src="../../../assets/nix-empresas-logo-black.svg"
+        alt="nix-empresa"
+        name="logo-nix"
+      />
+    </div>
+  </div>
+  <div class="content-center">
+    <!-- <div class="wrapper-input">
+      <input
+        class="search-input"
+        placeholder="O que gostaria de procurar?"
+        type="text"
+        name="search-input"
+      />
+      <img src="../../../assets/icons/search.svg" alt="search-icon" />
+    </div> -->
+  </div>
+  <div class="content-right">
+    <div class="bank-info-wrapper">
+      <p class="extra-small-regullar">ag: {{ branch }}</p>
+      <p class="extra-small-regullar">cc: {{ account }}-{{ accountDigit }}</p>
+    </div>
+    <div class="wrapper-icons">
+      <div class="wrapper-notification">
+        <img
+          src="../../../assets/icons/bell.svg"
+          [matMenuTriggerFor]="menunotification"
+          alt="bell-icon"
+          id="notification-btn"
+        />
+        <span class="notification" *ngIf="countNotifications > 0"></span>
+      </div>
+      <mat-menu class="menu-notification" #menunotification="matMenu">
+        <div class="mat-menu-header" style="margin-top: auto">
+          <div class="left">
+            <span class="title-notification">NOTIFICAÇÕES</span>
+          </div>
+          <div class="right">
+            <a class="nix-blue-03" (click)="checkAllNotificationAsRead()">marcar todas como lida</a>
+          </div>
+        </div>
+        <div class="notification-content">
+          <div *ngFor="let notification of notifications; last as isLast">
+            <div class="notification-row">
+              <div class="close-icon">
+                <button class="error-btn" (click)="readNotification(notification)"><img src="../../../assets/icons/close-rounded-grey.svg" /></button>
+              </div>
+              <div class="notification-message small-regular nix-black-03">
+                {{ notification.message }}
+              </div>
+            </div>
+            <div class="divider" *ngIf="!isLast"></div>
+          </div>
+        </div>
+        <div class="notification-footer">
+          <button
+            class="see-allnotifications-btn"
+            mat-menu-item
+            (click)="openNotifications()"
+            id="id-btn-all-notifications"
+          >
+            <span class="see-all-notifications">Ver todas as notificações</span>
+          </button>
+        </div>
+      </mat-menu>
+
+      <ngx-avatar
+        name="{{ user.user_info.name }}"
+        class="avatar"
+        [matMenuTriggerFor]="menu"
+        id="profile-btn"
+      ></ngx-avatar>
+      <mat-menu #menu="matMenu">
+        <div class="mat-menu-header">
+          <div class="left">
+            <ngx-avatar name="{{ user.user_info.name }}"></ngx-avatar>
+          </div>
+          <div class="right">
+            <p class="regular-bold">{{ user.user_info.name }}</p>
+            <p class="extra-small-regular">{{ user.user_info.email }}</p>
+          </div>
+        </div>
+
+        <button
+          mat-menu-item
+          (click)="openModalChangePassword()"
+          id="recover-password-btn"
+          class="align-center"
+        >
+          <img src="../../../assets/icons/locked.svg" alt="locked-icon" /><span
+            style="margin-left: 10px"
+            >Alterar senha</span
+          >
+        </button>
+        <button mat-menu-item (click)="navigateTo('/config')" id="settings-btn">
+          <img
+            src="../../../assets/icons/cogs.svg"
+            alt="cgos-icon"
+            width="16"
+            height="16"
+          /><span style="margin-left: 10px">Dados da empresa</span>
+        </button>
+        <button
+          mat-menu-item
+          (click)="openModalSupport()"
+          id="support-btn"
+          class="align-center"
+        >
+          <img src="../../../assets/icons/support.svg" alt="support-icon" /><span
+            style="margin-left: 10px"
+            >Suporte</span
+          >
+        </button>
+        <button mat-menu-item (click)="logout()" id="logout-btn">
+          <img src="../../../assets/icons/logout.svg" alt="logout-icon" /><span
+            style="margin-left: 10px"
+          >
+            Sair</span
+          >
+        </button>
+      </mat-menu>
+    </div>
+  </div>
+</div>

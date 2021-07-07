@@ -1,0 +1,37 @@
+.card {
+  background-color: var(--nix-white);
+  border-radius: 8px;
+  padding: 0px 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+}
+.tab-header {
+  padding: 30px 15px 0;
+  .title-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .wrapper-title {
+      display: flex;
+      align-items: baseline;
+      p {
+        margin-top: 10px !important;
+        color: var(--nix-grey-primary);
+        margin-left: 10px !important;
+      }
+    }
+    .main-button {
+      width: 180px !important;
+    }
+  }
+}
+.action {
+  cursor: pointer;
+  background: none;
+  border: none;
+  &:focus {
+    outline: none;
+  }
+}

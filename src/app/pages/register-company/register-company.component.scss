@@ -1,0 +1,151 @@
+mat-form-field {
+  width: 100%;
+}
+mat-label {
+  margin: 0 !important;
+}
+mat-error {
+  margin: 0 0 0 -10px !important;
+}
+.actions-buttons {
+  display: flex;
+  justify-content: flex-end;
+  :last-child {
+    margin-left: 15px;
+  }
+}
+h3 {
+  margin-bottom: 15px !important;
+}
+p {
+  &.regular-light {
+    margin-bottom: 15px !important;
+    color: var(--nix-grey-primary);
+  }
+}
+.content {
+  width: 100%;
+  height: 100%;
+  background-color: var(--nix-grey-secondary);
+  .header {
+    background-color: var(--nix-white);
+    height: 80px;
+    display: flex;
+    align-items: center;
+    padding: 0 50px;
+    img {
+      width: 150px;
+    }
+  }
+  .body {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .card {
+      margin-left: 40px;
+      margin-right: 40px;
+      height: auto;
+      background-color: var(--nix-white);
+      border-radius: 8px;
+      padding: 40px;
+      position: relative;
+      .tour-step {
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        p {
+          color: var(--nix-grey-primary);
+        }
+        .tour-btn {
+          margin-top: 30px;
+          width: 160px;
+          height: 45px;
+        }
+      }
+      .wrapper-form-field {
+        display: flex;
+        margin-bottom: 20px;
+        :first-child {
+          margin-right: 15px;
+        }
+        :last-child {
+          margin-left: 15px;
+        }
+      }
+    }
+  }
+}
+.company-adrress-grid {
+  display: grid;
+  grid-template-areas:
+    'FIRSTGRID SECONDGRID SECONDGRID'
+    'FIRSTGRID THIRDGRID FOURTHGRID'
+    'FIRSTGRID FIFTHGRID SIXTH';
+
+  .first-grid {
+    grid-area: FIRSTGRID;
+    margin-right: 15px;
+    mat-form-field {
+      width: calc(100% - 15px) !important;
+    }
+  }
+  .second-grid {
+    grid-area: SECONDGRID;
+    margin-left: 15px;
+    mat-form-field {
+      width: calc(100% - 30px) !important;
+    }
+  }
+  .third-grid {
+    grid-area: THIRDGRID;
+    margin-right: 15px;
+    margin-left: 15px;
+    mat-form-field {
+      width: calc(100% - 15px) !important;
+    }
+  }
+  .fourth-grid {
+    grid-area: FOURTHGRID;
+    margin-left: 15px;
+    mat-form-field {
+      width: calc(100% - 30px) !important;
+    }
+  }
+  .fifth-grid {
+    grid-area: FIFTHGRID;
+    margin-right: 15px;
+    margin-left: 15px;
+    mat-form-field {
+      width: calc(100% - 15px) !important;
+    }
+  }
+  .sixth-grid {
+    grid-area: SIXTH;
+    margin-left: 15px;
+    mat-form-field {
+      width: calc(100% - 30px) !important;
+    }
+  }
+}
+.wrapper-form {
+  .separator {
+    margin: 0 20px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    height: 55px;
+  }
+  span {
+    display: flex;
+    justify-content: space-between;
+  }
+  .dv {
+    width: 50px;
+  }
+}
+::ng-deep .mat-horizontal-stepper-header {
+  pointer-events: none !important;
+}

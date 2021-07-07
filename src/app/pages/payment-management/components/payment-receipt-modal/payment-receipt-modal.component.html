@@ -1,0 +1,93 @@
+<mat-dialog-content>
+  <div class="close-wrapper">
+    <button mat-button mat-dialog-close name="modal-close-btn">
+      <img src="../../../../assets/icons/close-square.svg" />
+    </button>
+  </div>
+  <div class="content">
+    <!-- <div class="logo">
+      <img src="../../../../../assets/nix-empresas-logo-black.svg" />
+    </div> -->
+    <div class="loading-shade" *ngIf="loading">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="recipient">
+      <span>
+        <p class="large-light title">Comprovante de pagamento</p>
+        <h3 class="bold">Pagamento de Boleto</h3>
+      </span>
+    </div>
+    <div class="recipient-details">
+      <span class="vertical-span">
+        <p class="large-light title">Informações do boleto pago:</p>
+        <p class="large-light">
+          {{ payment.bank_name }}
+        </p>
+      </span>
+      <span class="vertical-span">
+        <p class="large-light title">Código de barras:</p>
+        <p class="large-light overflow-text">
+          {{ payment.barcode | mask: maskBarcode(payment.barcode) }}
+        </p>
+      </span>
+      <span>
+        <p class="large-light title">Data de vencimento:</p>
+        <p class="large-light">{{ payment.due_date | date: 'dd/MM/yyyy' }}</p>
+      </span>
+      <span>
+        <p class="large-light title">Valor:</p>
+        <h3 class="large-bold">{{ payment.amount | currency }}</h3>
+      </span>
+
+      <span *ngIf="payment.transaction_type === 'CREDIT_CARD'" class="desc">
+        <p class="small-light title">
+          {{ 'Pago com cartão de crédito final ' + payment.end_card_number }}
+        </p>
+      </span>
+
+      <span *ngIf="payment.transaction_type === 'NIX'" class="desc">
+        <p class="small-light title">
+          {{'Pago com Conta Nix '+branch +' '+account+'-'+accountDigit}}
+        </p>
+      </span>
+
+      <span class="vertical-span" *ngIf="payment.transaction_type === 'MULTI'">
+        <span>
+          <p class="small-light title">
+            {{ 'Pago com cartão de crédito final ' + payment.end_card_number }}:
+          </p>
+          <p class="small-light">{{ payment.amount_credit_card | currency }}</p>
+        </span>
+        <span>
+          <p class="small-light title">
+            {{'Pago com Conta Nix '+branch +' '+account+'-'+accountDigit}}
+          </p>
+          <p class="small-light">{{ payment.amount_nix | currency }}</p>
+        </span>
+      </span>
+      <hr />
+      <span class="vertical-span">
+        <p class="large-light title">Autenticação:</p>
+        <p class="large-light overflow-text">
+          {{ payment.id }}
+        </p>
+      </span>
+    </div>
+    <div class="actions">
+      <button
+        class="main-button-inverse"
+        name="download-button"
+        (click)="download()"
+      >
+        Fazer Download
+      </button>
+      <button
+        class="main-button"
+        name="send-email-button"
+        (click)="sendEmail()"
+      >
+        Enviar por e-mail
+      </button>
+    </div>
+  </div>
+</mat-dialog-content>

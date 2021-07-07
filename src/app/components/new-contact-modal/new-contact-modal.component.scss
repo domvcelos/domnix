@@ -1,0 +1,213 @@
+mat-dialog-content {
+  .content {
+    padding: 32px 64px;
+    position: relative 0 40px;
+  }
+  .response-content {
+    min-height: initial !important;
+  }
+}
+
+mat-form-field {
+  width: 100%;
+  mat-error {
+    margin-left: 0 !important;
+    p {
+      margin-left: -1em !important;
+    }
+  }
+}
+
+::ng-deep .mat-form-field-flex > .mat-form-field-infix {
+  padding: 0.4em 0px !important;
+}
+::ng-deep .mat-form-field-label-wrapper {
+  top: -1.2em;
+}
+
+::ng-deep
+  .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float
+  .mat-form-field-label {
+  transform: translateY(-1.1em) scale(0.75);
+}
+::ng-deep .mat-form-field-flex {
+  height: 45px !important;
+}
+
+.first-form {
+  .first-form-grid {
+    display: grid;
+    grid-template-columns: 50% auto;
+    grid-template-areas:
+      'FIRSTGRID FIRSTGRID'
+      'SECONDGRID SECONDGRID';
+  }
+  .second-form-grid {
+    display: grid;
+    grid-template-columns: 40% auto;
+    grid-template-areas:
+      'FIRSTGRID SECONDGRID SECONDGRID'
+      'FIRSTGRID THIRDGRID FOURTHGRID'
+      'FIRSTGRID FIFTHGRID SIXTH';
+  }
+
+  .first-grid {
+    grid-area: FIRSTGRID;
+    margin-right: 15px;
+    display: flex;
+    flex-direction: column;
+  }
+  .second-grid {
+    grid-area: SECONDGRID;
+    margin-left: 15px;
+  }
+  .third-grid {
+    grid-area: THIRDGRID;
+    margin-right: 15px;
+    margin-left: 15px;
+  }
+  .fourth-grid {
+    grid-area: FOURTHGRID;
+  }
+  .fifth-grid {
+    grid-area: FIFTHGRID;
+    margin-right: 15px;
+    margin-left: 15px;
+  }
+  .sixth-grid {
+    grid-area: SIXTH;
+  }
+}
+.second-form {
+  .wrapper-form {
+    .separator {
+      margin: 0 20px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      height: 55px;
+    }
+    .wrapper-bank-numbers {
+      display: flex;
+    }
+    div {
+      display: flex;
+      mat-form-field {
+        &:last-child {
+          margin-right: 30px;
+        }
+      }
+      mat-label {
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+      }
+      &.wrapper-mat-field {
+        :nth-child(1) {
+          margin-right: 15px;
+        }
+        :nth-child(2) {
+          margin-left: 15px !important;
+        }
+        :last-child {
+          margin-left: 30px;
+        }
+      }
+    }
+    .subtitle {
+      margin-bottom: 10px;
+    }
+  }
+
+  .dv {
+    width: 50px;
+  }
+}
+.wrapper-button-nav {
+  margin-top: -20px;
+  display: flex;
+  justify-content: flex-end;
+  :last-child {
+    margin-left: 10px;
+  }
+}
+
+.wrapper-save-contact-button {
+  margin-top: 0px !important;
+  margin-right: 30px;
+}
+
+::ng-deep .mat-horizontal-stepper-header {
+  pointer-events: none !important;
+}
+@media only screen and(min-width: 319px) and (max-width: 425px) {
+  .second-form-grid {
+    display: flex !important;
+    flex-direction: column;
+    .first-grid {
+      margin-right: 0 !important;
+    }
+    .third-grid {
+      margin-right: 0 !important;
+    }
+    .fifth-grid {
+      margin-right: 0 !important;
+    }
+  }
+  .wrapper-form {
+    span {
+      flex-direction: column;
+
+      mat-label {
+        margin-right: 0 !important;
+        margin-left: 0 !important;
+      }
+      &.wrapper-mat-field {
+        :nth-child(1) {
+          margin-right: 0 !important;
+        }
+        :nth-child(2) {
+          margin-left: 0 !important;
+        }
+        :last-child {
+          margin-left: 0 !important;
+        }
+      }
+    }
+    .subtitle {
+      margin-bottom: 10px;
+    }
+  }
+  .dv {
+    width: 100% !important;
+  }
+}
+@media only screen and(min-width: 768px) and (max-width: 1000px) {
+  .dv-first {
+    margin-right: 10px;
+  }
+  .separator {
+    margin: 0 10px !important;
+  }
+}
+@media only screen and (min-width: 1025px) and (max-width: 1280px) {
+  mat-dialog-content {
+    .content {
+      padding-top: 16px;
+      padding-bottom: 16px;
+    }
+  }
+  .mat-form-field {
+    margin-bottom: 0;
+  }
+  .subtitle {
+    margin-bottom: 10px;
+  }
+}
+@media only screen and (max-width: 1024px) {
+  mat-dialog-content {
+    .content {
+      padding-top: 24px;
+      padding-bottom: 0;
+    }
+  }
+}

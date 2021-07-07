@@ -1,0 +1,380 @@
+<mat-dialog-content>
+  <div class="close-wrapper">
+    <button mat-button mat-dialog-close *ngIf="!loading" name="modal-close-btn">
+      <img src="../../../../assets/icons/close-square.svg" />
+    </button>
+  </div>
+  <div class="content">
+    <div class="loading-shade" *ngIf="loading">
+      <mat-spinner></mat-spinner>
+    </div>
+    <mat-horizontal-stepper linear #stepper labelPosition="bottom">
+      <mat-step   [stepControl]="firstFormGroup">
+        <form [formGroup]="firstFormGroup" class="first-form">
+          <ng-template matStepLabel>Perfil</ng-template>
+          <div class="wrapper-form">
+            <div class="subtitle"><h3 class="bold">Dados pessoais</h3></div>
+            <div class="second-form-grid">
+              <div class="first-grid">
+                <mat-form-field class="material-form" appearance="outline">
+                  <mat-label>CPF ou CNPJ</mat-label>
+                  <input type="text" matInput name="cpf" required formControlName="document_value" mask="000.000.000-00||00.000.000/0000-00"/>
+                  <mat-error><p *ngIf="firstFormGroup.controls['document_value'].errors?.required">CPF ou CNPJ é um campo obrigatório.</p>
+                    <p *ngIf="firstFormGroup.controls['document_value'].errors?.mask">Documento inválido.</p>
+                    <p *ngIf="firstFormGroup.controls['document_value'].errors?.invalidCpf">CPF inválido.</p>
+                    <p *ngIf="firstFormGroup.controls['document_value'].errors?.invalidCnpj">CNPJ inválido.</p>
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="material-form" appearance="outline">
+                  <mat-label>Telefone</mat-label>
+                  <input type="text" matInput name="phone" required mask="(00) 00000-0000||(00) 0000-0000" formControlName="phone"/>
+                  <mat-error>
+                    <p *ngIf="firstFormGroup.controls['phone'].errors?.required">Telefone é um campo obrigatório.</p>
+                    <p *ngIf="firstFormGroup.controls['phone'].errors?.mask">Telefone inválido.</p>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="second-grid">
+                <mat-form-field class="material-form" appearance="outline">
+                  <mat-label>Nome / Razão social</mat-label>
+                  <input type="text" matInput name="nome" required formControlName="name"/>
+                  <mat-error>
+                    <p *ngIf="firstFormGroup.controls['name'].errors?.required">Nome é um campo obrigatório.</p>
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="material-form" appearance="outline">
+                  <mat-label>E-mail</mat-label>
+                  <input type="email" matInput name="email" required formControlName="email"/>
+                  <mat-error>
+                    <p *ngIf="firstFormGroup.controls['email'].errors?.required">Email é obrigatório.</p>
+                    <p *ngIf="firstFormGroup.controls['email'].errors?.email">Digite um email válido.</p>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <div class="wrapper-form">
+            <div class="subtitle"><h3 class="bold">Endereço</h3></div>
+            <div class="second-form-grid">
+              <div class="first-grid">
+                <mat-form-field class="material-form w20" appearance="outline">
+                  <mat-label>CEP</mat-label>
+                  <input
+                    type="text"
+                    matInput
+                    name="zip_code"
+                    required
+                    formControlName="zip_code"
+                    mask="00000-000"
+                    (blur)="fetchAddress()"
+                  />
+                  <mat-error>
+                    <p
+                      *ngIf="
+                        firstFormGroup.controls['zip_code'].errors?.required
+                      "
+                    >
+                      CEP é um campo obrigatório.
+                    </p>
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="material-form w20" appearance="outline">
+                  <mat-label>Número</mat-label>
+                  <input
+                    type="text"
+                    matInput
+                    name="number"
+                    maxlength="8"
+                    required
+                    formControlName="number"
+                  />
+                  <mat-error>
+                    <p
+                      *ngIf="firstFormGroup.controls['number'].errors?.required"
+                    >
+                      Número é um campo obrigatório.
+                    </p>
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="material-form w16" appearance="outline">
+                  <mat-label>Cidade</mat-label>
+                  <input
+                    type="text"
+                    matInput
+                    name="city"
+                    required
+                    formControlName="city"
+                  />
+                  <mat-error>
+                    <p *ngIf="firstFormGroup.controls['city'].errors?.required">
+                      Cidade é um campo obrigatório.
+                    </p>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="second-grid">
+                <mat-form-field class="material-form" appearance="outline">
+                  <mat-label>Endereço</mat-label>
+                  <input
+                    type="text"
+                    matInput
+                    name="street"
+                    required
+                    formControlName="street"
+                  />
+                  <mat-error>
+                    <p
+                      *ngIf="firstFormGroup.controls['street'].errors?.required"
+                    >
+                      Endereço é um campo obrigatório.
+                    </p>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="third-grid">
+                <mat-form-field class="material-form" appearance="outline">
+                  <mat-label>Complemento</mat-label>
+                  <input type="text" matInput name="complement" formControlName="complement" />
+                </mat-form-field>
+              </div>
+              <div class="fourth-grid">
+                <mat-form-field class="material-form" appearance="outline">
+                  <mat-label>Bairro</mat-label>
+                  <input
+                    type="text"
+                    matInput
+                    name="neighborhood"
+                    required
+                    formControlName="neighborhood"
+                  />
+                  <mat-error>
+                    <p
+                      *ngIf="
+                        firstFormGroup.controls['neighborhood'].errors?.required
+                      "
+                    >
+                      Bairro é um campo obrigatório.
+                    </p>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="fifth-grid">
+                <mat-form-field class="material-form w26" appearance="outline">
+                  <mat-label>Estado</mat-label>
+                  <mat-select
+                    id="state"
+                    formControlName="state"
+                    name="state"
+                    required
+                  >
+                    <mat-option
+                      *ngFor="let state of states"
+                      [value]="state.value"
+                    >
+                      {{ state.viewValue }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>
+                    <p
+                      *ngIf="firstFormGroup.controls['state'].errors?.required"
+                    >
+                      Estado é um campo obrigatório.
+                    </p>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="sixth-grid"></div>
+            </div>
+          </div>
+          <div class="wrapper-button-nav">
+            <button
+              mat-button
+              matStepperNext
+              class="main-button-inverse"
+              name="next-button"
+            >
+              Próximo
+            </button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step  [stepControl]="secondFormGroup" [editable]="false">
+        <form [formGroup]="secondFormGroup" class="second-form">
+          <ng-template matStepLabel>Dados bancários</ng-template>
+          <div class="wrapper-form">
+            <div class="subtitle">
+              <h3 class="bold">
+                Falta pouco! Agora precisamos dos Dados bancários
+              </h3>
+            </div>
+            <div>
+              <mat-form-field class="material-form" appearance="outline">
+                <mat-label>Banco ou instituição</mat-label>
+                <input
+                  type="text"
+                  matInput
+                  [matAutocomplete]="auto"
+                  name="bank"
+                  formControlName="bank"
+                />
+                <mat-autocomplete
+                  #auto="matAutocomplete"
+                  [displayWith]="displayFn"
+                >
+                  <mat-option
+                    *ngFor="let option of filteredOptions | async"
+                    [value]="option"
+                  >
+                    {{ option.long_name.toLocaleUpperCase() }}
+                  </mat-option>
+                </mat-autocomplete>
+                <mat-error>
+                  <p *ngIf="secondFormGroup.controls['bank'].errors?.required">
+                    Banco ou instituição é um campo obrigatório.
+                  </p>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field class="material-form w26" appearance="outline">
+                <mat-label>Tipo de conta</mat-label>
+                <mat-select
+                  id="account_type"
+                  formControlName="account_type"
+                  name="account_type"
+                >
+                  <mat-option
+                    *ngFor="let type of accoutTypes"
+                    [value]="type.value"
+                  >
+                    {{ type.label }}
+                  </mat-option>
+                </mat-select>
+                <mat-error>
+                  <p
+                    *ngIf="
+                      secondFormGroup.controls['account_type'].errors?.required
+                    "
+                  >
+                    Tipo de conta é um campo obrigatório.
+                  </p>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="wrapper-bank-numbers">
+              <div>
+                <mat-form-field class="material-form" appearance="outline">
+                  <mat-label>Agência</mat-label>
+                  <input
+                    type="text"
+                    matInput
+                    name="agency"
+                    formControlName="agency"
+                    mask="0{4}"
+                  />
+                  <mat-error>
+                    <p
+                      *ngIf="
+                        secondFormGroup.controls['agency'].errors?.required
+                      "
+                    >
+                      Agência é um campo obrigatório.
+                    </p>
+                  </mat-error>
+                </mat-form-field>
+                <div class="separator">-</div>
+                <mat-form-field
+                  class="material-form dv dv-first"
+                  appearance="outline"
+                >
+                  <mat-label>DV</mat-label>
+                  <input type="text" matInput name="agency_cd" formControlName="agency_cd" mask="9" />
+                </mat-form-field>
+              </div>
+              <div>
+                <mat-form-field class="material-form" appearance="outline">
+                  <mat-label>Conta</mat-label>
+                  <input
+                    type="text"
+                    matInput
+                    name="account"
+                    formControlName="account"
+                    mask="0{4}9{8}"
+                  />
+                  <mat-error>
+                    <p
+                      *ngIf="
+                        secondFormGroup.controls['account'].errors?.required
+                      "
+                    >
+                      Conta é um campo obrigatório.
+                    </p>
+                    <p
+                      *ngIf="
+                        secondFormGroup.controls['account'].errors?.pattern
+                      "
+                    >
+                      Somente números.
+                    </p>
+                  </mat-error>
+                </mat-form-field>
+                <div class="separator">-</div>
+                <mat-form-field class="material-form dv" appearance="outline">
+                  <mat-label>DV</mat-label>
+                  <input
+                    type="text"
+                    matInput
+                    name="account_cd"
+                    formControlName="account_cd"
+                    mask="0"
+                  />
+                  <mat-error>
+                    <p
+                      *ngIf="
+                        secondFormGroup.controls['account_cd'].errors?.required
+                      "
+                    >
+                      DV é um campo obrigatório.
+                    </p>
+                    <p
+                      *ngIf="
+                        secondFormGroup.controls['account_cd'].errors?.pattern
+                      "
+                    >
+                      Somente números.
+                    </p>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <div class="wrapper-button-nav wrapper-save-contact-button">
+            <button
+              mat-button
+              matStepperPrevious
+              class="main-button-inverse"
+              name="back-btn"
+            >
+              Voltar
+            </button>
+            <button mat-button (click)="contactDialog.type === 'create' ? saveContact() : editContact()" class="main-button" name="save-contact-btn">
+              {{contactDialog.type == 'edit' ? 'Editar' : 'Salvar'}} contato
+            </button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step  label="Step 3">
+        <ng-template matStepLabel>Concluído</ng-template>
+        <div class="response-content" *ngIf="contactSaved">
+          <img src="../../../assets/icons/success.svg" />
+          <p class="regular-light">Seu contato foi {{contactDialog.type == 'edit' ? 'editado' : 'cadastrado'}} com sucesso!</p>
+        </div>
+        <div class="response-content" *ngIf="!contactSaved">
+          <img src="../../../assets/icons/failed.svg" />
+          <p class="regular-light">Não foi possível {{contactDialog.type == 'edit' ? 'editar' : 'cadastrar novo'}} contato!</p>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </div>
+</mat-dialog-content>

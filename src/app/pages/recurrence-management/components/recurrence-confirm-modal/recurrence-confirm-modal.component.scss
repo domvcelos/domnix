@@ -1,0 +1,45 @@
+.content {
+    background-color: #fff;
+    padding: 60px 180px 20px;
+    position: relative;
+    border-radius: 8px;
+    .logo {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+    .recipient-data {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 40px;
+    }
+    .payment-data{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        span{
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            width: 100%;
+            &:last-child{
+                margin-top: 40px;
+                justify-content: center;
+            }
+        }
+        hr{
+            width: 100%;
+            margin-bottom: 30px;
+        }
+        .alternative-text{
+            color: var(--nix-black) !important;
+        }
+        button{
+            height: 65px;
+            width: 250px !important;
+        }
+    }
+  }
+  

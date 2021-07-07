@@ -1,0 +1,56 @@
+mat-dialog-content {
+  .content {
+    padding: 32px 70px;
+    form {
+      .form {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        mat-form-field {
+          width: 100%;
+        }
+        .three-mat-form {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          width: 100%;
+          mat-form-field {
+            width: 100%;
+          }
+          :nth-child(2) {
+            margin: 0 30px 10px;
+          }
+        }
+      }
+      .actions {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 16px;
+        button {
+          width: 150px;
+          height: 45px;
+        }
+      }
+    }
+  }
+}
+@media only screen and (max-width: 1250px) {
+  mat-dialog-content {
+    .content {
+      form {
+        .form {
+          flex-wrap: wrap;
+          .three-mat-form {
+            flex-direction: column;
+            :nth-child(2) {
+              margin: 0;
+            }
+          }
+        }
+        .actions {
+          justify-content: center;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,214 @@
+.select-transfer-text {
+  color: #888e8c;
+  margin-bottom: 32px !important;
+}
+.transfer-contact-text {
+  color: #888e8c;
+  margin-bottom: 16px !important;
+}
+.transfer-body {
+  padding: 0 60px;
+  display: flex;
+  flex-direction: column;
+  .contact-data {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 50px;
+    label {
+      color: #c3c6c5;
+      margin-right: 16px;
+    }
+    span{
+      color: #4C5552;
+    }
+
+  }
+  .contact-account {
+    display: flex;
+    align-items: center;
+    margin-bottom: 30px;
+    p {
+      color: #111d19;
+      font-family: 'Prompt', sans-serif !important;
+      font-style: normal;
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 30px;
+    }
+    span {
+      margin-left: 15px;
+      padding-left: 10px;
+      padding-right: 10px;
+      position: static;
+      width: auto;
+      height: 22px;
+      left: 8px;
+      right: 8px;
+      top: 4px;
+      background-color: #b8f4e2;
+    }
+    a {
+      border: unset !important;
+      margin-left: 10px;
+      background-color: unset !important;
+    }
+    a:hover {
+      cursor: pointer;
+    }
+    img {
+      width: 25px;
+    }
+  }
+  .transfer-amount {
+    display: block;
+    align-items: center;
+    label {
+      width: -webkit-fill-available;
+      margin-right: 30px;
+      color: #888e8c;
+    }
+    .material-form {
+      width: auto !important;
+    }
+  }
+  .account-balance {
+    label {
+      margin-right: 15px;
+      color: #c3c6c5;
+    }
+    span {
+      color: #888e8c;
+      border-bottom: 1px solid #c3c6c5;
+    }
+  }
+  .wrapper-button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    button {
+      height: 59px;
+      width: 269px;
+      left: 0px;
+      top: 0px;
+      border-radius: 4px;
+      padding: 16px, 32px, 16px, 32px;
+      font-family: 'Prompt', sans-serif !important;
+      font-style: normal;
+      font-size: 18px;
+      line-height: 27px;
+    }
+  }
+}
+
+mat-label {
+  margin: 0 !important;
+}
+.mat-expansion-panel-body {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  .header-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 40px;
+  }
+}
+.content {
+  .card {
+    background-color: var(--nix-white);
+    border-radius: 8px;
+    padding: 50px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    .contact-not-selected {
+      color: var(--nix-grey-primary);
+      display: grid;
+      justify-items: center;
+      height: inherit;
+      p {
+        font-family: 'Prompt', sans-serif !important;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 14px;
+        line-height: 22px;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        color: var(--nix-grey-primary);
+        width: 365px;
+      }
+      h3 {
+        margin: 10px 0 !important;
+        color: var(--nix-black);
+        font-family: 'Prompt', sans-serif !important;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 24px;
+        line-height: 30px;
+      }
+      button {
+        margin-top: 30px;
+        width: 206px;
+        height: 50px;
+        font-family: 'Prompt', sans-serif !important;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 16px;
+        line-height: 24px;
+        text-align: center;
+        color: var(--nix-black);
+      }
+    }
+    section {
+      height: 100%;
+      width: 100%;
+      fieldset {
+        display: flex;
+        justify-content: center;
+        padding: 40px 80px;
+        flex-direction: column;
+        border: none;
+        .material-form {
+          width: 100%;
+          font-size: 14px;
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 800px) {
+  .content {
+    .card {
+      section {
+        fieldset {
+          padding: 40px 40px;
+        }
+      }
+    }
+  }
+}
+@media only screen and(min-width: 319px) and (max-width: 425px) {
+  .content {
+    .card {
+      padding: 20px 10px !important;
+      section {
+        text-align: center;
+        fieldset {
+          padding: 20px 10px !important;
+        }
+        h3 {
+          margin-bottom: 20px !important;
+        }
+      }
+    }
+  }
+}

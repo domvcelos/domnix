@@ -1,0 +1,154 @@
+<form class="form" [formGroup]="carneChargeFormGroup" #myForm="ngForm" (ngSubmit)="openDialog(myForm)">
+  <div class="wrapper-form">
+    <div class="first-grid">
+      <mat-form-field class="material-form" appearance="outline">
+        <mat-label>Valor (R$)</mat-label>
+        <input
+          type="text"
+          matInput
+          name="amount"
+          min="10"
+          required
+          formControlName="amount"
+          currencyMask
+          
+        />
+        <mat-error>
+          <p *ngIf="carneChargeFormGroup.controls['amount'].errors?.required">
+            Valor é um campo obrigatório.
+          </p>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="material-form" appearance="outline">
+        <mat-label>Data de vencimento</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker1"
+          name="firstBillDueDate"
+          id="firstBillDueDate"
+          [min]="minDate"
+          (click)="picker1.open()"
+          required
+          formControlName="firstBillDueDate"
+          readonly
+          class="datepicker-input"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="picker1"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker1 disabled="false"></mat-datepicker>
+        <mat-error>
+          <p
+            *ngIf="
+              carneChargeFormGroup.controls['firstBillDueDate'].errors?.required
+            "
+          >
+            Vencimento da primeira parcela é um campo obrigatório.
+          </p>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="second-grid">
+      <mat-form-field class="material-form" appearance="outline">
+        <mat-label>Número de parcelas</mat-label>
+        <input
+          type="number"
+          matInput
+          name="numberOfBills"
+          required
+          formControlName="numberOfBills"
+          min="2"
+        />
+        <mat-error>
+          <p
+            *ngIf="
+              carneChargeFormGroup.controls['numberOfBills'].errors?.required
+            "
+          >
+            Número de parcelas é um campo obrigatório.
+          </p>
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="third-grid">
+      <mat-form-field
+        class="material-form"
+        appearance="outline"
+        *ngIf="discountRadio === 'money'"
+      >
+        <mat-label>Desconto (R$)</mat-label>
+        <input
+          type="text"
+          matInput
+          name="discount"
+          currencyMask
+          
+          formControlName="discountMoney"
+        />
+      </mat-form-field>
+    </div>
+    <div class="fourth-grid">
+      <mat-form-field
+        class="material-form"
+        appearance="outline"
+        *ngIf="discountRadio === 'percent'"
+        style="margin-left: 30px"
+      >
+        <mat-label>Desconto (%)</mat-label>
+        <input
+          type="number"
+          matInput
+          name="discount"
+          min="0"
+          max="100"
+          formControlName="discountPercent"
+        />
+        <mat-error>
+          <p
+            *ngIf="
+              carneChargeFormGroup.controls['discountPercent'].errors?.min ||
+              carneChargeFormGroup.controls['discountPercent'].errors?.max
+            "
+          >
+            Por favor insira um valor entre 0 e 100
+          </p>
+        </mat-error>
+      </mat-form-field>
+      <div class="radio-list-row">
+        <span>
+          <label for="value" class="regular-light">(R$)</label>
+          <input
+            type="radio"
+            id="value"
+            name="discountRadio"
+            value="money"
+            [(ngModel)]="discountRadio"
+            [ngModelOptions]="{ standalone: true }"
+            checked
+          />
+        </span>
+        <span>
+          <label for="percent" class="regular-light">(%)</label>
+          <input
+            type="radio"
+            id="percent"
+            name="discountRadio"
+            [(ngModel)]="discountRadio"
+            [ngModelOptions]="{ standalone: true }"
+            value="percent"
+          />
+        </span>
+      </div>
+    </div>
+    <div class="fifth-grid">
+      <mat-form-field class="material-form" appearance="outline">
+        <mat-label>Observações</mat-label>
+        <textarea name="comments" type="text" matInput formControlName="comments"></textarea>
+        <p class="inside-text">Texto do e-mail</p>
+      </mat-form-field>
+    </div>
+  </div>
+  <button type="submit" class="main-button" name="generate-link-btn" [disabled]="carneChargeFormGroup.invalid">Gerar link de cobrança</button>
+  
+</form>

@@ -1,0 +1,145 @@
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  .header-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 40px;
+  }
+}
+.mat-form-field {
+  width: 100%;
+}
+.content {
+  .card {
+    background-color: var(--nix-white);
+    border-radius: 8px;
+    padding: 50px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    section {
+      height: 100%;
+      width: 100%;
+      padding: 32px 48px;
+    }
+  }
+}
+mat-expansion-panel {
+  box-shadow: none !important;
+  .pay-title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 30px 0px 60px;
+  }
+  .pay-body {
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 60px;
+    color: var(--nix-grey-primary);
+    display: flex;
+    flex-direction: column;
+    .pay-body-data {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 50px;
+    }
+    .pay-body-value {
+      display: flex;
+      .left {
+        width: 100%;
+        padding-right: 60px;
+        div:nth-child(2) {
+          margin-top: 8px;
+        }
+        div:nth-child(3) {
+          margin-top: 8px;
+        }
+        div {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+      }
+      .right {
+        width: 100%;
+      }
+    }
+    .value-inputs {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      align-self: flex-end;
+      padding-left: 20px;
+    }
+    .actions {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      button {
+        width: 269px;
+        height: 65px;
+        color: var(--nix-black);
+      }
+    }
+  }
+}
+.credit-card-confirm {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 20px;
+}
+
+@media screen and (min-width: 2200px) {
+  .pay-body {
+    width: 50% !important;
+  }
+}
+
+@media screen and (max-width: 2000px) {
+  .pay-body {
+    width: 70% !important;
+  }
+}
+
+@media screen and (max-width: 1800px) {
+  .pay-body {
+    width: 80% !important;
+  }
+}
+
+@media screen and (max-width: 1600px) {
+  .pay-body {
+    width: 90% !important;
+  }
+  .digitable-line {
+    max-width: 250px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .pay-body {
+    width: 100% !important;
+  }
+  .digitable-line {
+    max-width: 235px;
+  }
+  .credit-card-confirm {
+    p {
+      font-size: 14px !important;
+    }
+  }
+}
+@media screen and (max-width: 900px) {
+  .digitable-line {
+    max-width: 205px;
+  }
+}

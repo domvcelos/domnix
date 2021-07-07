@@ -1,0 +1,71 @@
+<mat-dialog-content>
+  <div class="close-wrapper">
+    <button mat-button mat-dialog-close name="modal-close-btn">
+      <img src="../../../../assets/icons/close-square.svg" />
+    </button>
+  </div>
+  <div class="content">
+    <div class="loading-shade" *ngIf="loading">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="title-wrapper">
+      <h3 class="bold">Precisa de Ajuda?</h3>
+      <p class="large-light">
+        Envie sua dúvida, sugestão ou reclamação que nosso suporte entrará em contato para ajudá-lo
+      </p>
+    </div>
+    <form [formGroup]="supportFormGroup" (submit)="onSubmit()">
+        <mat-form-field class="material-form" appearance="outline">
+          <mat-label>Nome</mat-label>
+          <input
+            type="text"
+            matInput
+            name="name"
+            required
+            formControlName="name"
+          />
+          <mat-error>
+            <p *ngIf="supportFormGroup.controls['name'].errors?.required">Nome é um campo obrigatório.</p>
+          </mat-error>
+        </mat-form-field>
+  
+        <mat-form-field class="material-form" appearance="outline">
+          <mat-label>Assunto</mat-label>
+          <mat-select formControlName="subject" name="subject" required>
+            <mat-option *ngFor="let subject of subjects" [value]="subject">{{ subject}}</mat-option>
+          </mat-select>
+          <mat-error>
+            <p *ngIf="supportFormGroup.controls['subject'].errors?.required">Assunto é um campo obrigatório.</p>
+          </mat-error>
+        </mat-form-field>
+
+      <mat-form-field class="material-form textarea" appearance="outline">
+        <mat-label>Digite sua dúvida</mat-label>
+        <textarea
+          name="comments"
+          type="text"
+          matInput
+          formControlName="comments"
+          style="height: 100px !important"
+        ></textarea>
+        <mat-error>
+          <p *ngIf="supportFormGroup.controls['comments'].errors?.required">Esse campo é obrigatório.</p>
+          <p *ngIf="supportFormGroup.controls['comments'].errors?.minlength">É necessário ao menos {{supportFormGroup.controls['comments'].errors.minlength.requiredLength}} caracteres</p>
+        </mat-error>
+      </mat-form-field>
+      <div class="actions">
+        <button
+          mat-button
+          class="main-button-inverse"
+          mat-dialog-close
+          type="button"
+        >
+          Cancelar
+        </button>
+        <button mat-button class="main-button" type="submit">
+          Enviar para suporte
+        </button>
+      </div>
+    </form>
+  </div>
+  </mat-dialog-content>

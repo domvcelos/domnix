@@ -1,0 +1,60 @@
+<mat-dialog-content>
+    <div class="close-wrapper">
+      <button mat-button mat-dialog-close name="modal-close-btn">
+        <img src="../../../../assets/icons/close-square.svg" />
+      </button>
+    </div>
+    <div class="content">
+      <div class="logo">
+        <img src="../../../../../assets/nix-empresas-logo-black.svg" />
+      </div>
+      <div class="recipient">
+       <span>
+          <p class="large-light">Destinatário</p>
+          <h3 class="bold">{{ collection.payer_name}}</h3>
+        </span>
+      </div>
+  
+      <div class="recipient-details">
+         <span>
+          <p class="large-light">CPF/CNPJ:</p>
+          <p class="large-light">{{ collection.payer_social_number | cpfCnpj }}</p>
+        </span>
+        <span>
+          <p class="large-light">Forma de pagamento</p>
+          <p class="large-light">{{ collection.transaction_type | paymentMethod }}</p>
+        </span>
+        <span>
+          <p class="large-light">Emitido:</p>
+          <p class="large-light">{{ collection.created | date: 'dd/MM/yyyy' }}</p>
+        </span>
+        <span>
+          <p class="large-light">Vencimento:</p>
+          <p class="large-light">{{ collection.due_date | date: 'dd/MM/yyyy' }}</p>
+        </span>
+        <span>
+          <p class="large-light">Status:</p>
+          <p
+            class="large-light"
+            [innerHtml]="collection | statusCollection"
+          ></p>
+        </span>
+        <span>
+          <p class="large-light">Desconto:</p>
+          <p class="large-light">{{ collection.amount_values.discount | currency }}</p>
+        </span>
+        <span>
+          <p class="large-light">Frete:</p>
+          <p class="large-light">{{ collection.amount_values.shipping | currency }}</p>
+        </span>
+        <span>
+          <p class="large-light">Cobrança:</p>
+          <p class="large-light">{{ collection.id}}</p>
+        </span>
+        <span>
+          <p class="large-light">Valor cobrado do cliente:</p>
+          <h3 class="bold">{{ collection.amount_values.final_amount | currency }}</h3>
+        </span>
+      </div>
+    </div>
+  </mat-dialog-content>

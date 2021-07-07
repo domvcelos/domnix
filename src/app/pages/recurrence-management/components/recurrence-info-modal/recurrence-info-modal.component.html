@@ -1,0 +1,57 @@
+<mat-dialog-content>
+  <div class="close-wrapper">
+    <button mat-button mat-dialog-close name="modal-close-btn">
+      <img src="../../../../assets/icons/close-square.svg" />
+    </button>
+  </div>
+  <div class="content">
+    <div class="logo">
+      <img src="../../../../../assets/nix-empresas-logo-black.svg" />
+    </div>
+    <div class="recipient">
+      <span>
+        <p class="large-light">Beneficiário</p>
+        <h3 class="bold">{{ recurrence.customer_name }}</h3>
+      </span>
+    </div>
+
+    <div class="recipient-details">
+      <span>
+        <p class="large-light">CPF/CNPJ:</p>
+        <p class="large-light">{{ recurrence.customer_identity | cpfCnpj }}</p>
+      </span>
+      <span>
+        <p class="large-light">Plano</p>
+        <p class="large-light">{{ recurrence.plan_name }}</p>
+      </span>
+      <span>
+        <p class="large-light">Frequência:</p>
+        <p class="large-light">{{ recurrence.plan_interval | interval }}</p>
+      </span>
+      <span>
+        <p class="large-light">Status:</p>
+        <p
+          class="large-light"
+          [innerHtml]="recurrence.status | statusRecurrence"
+        ></p>
+      </span>
+
+      <span>
+        <p class="large-light">Forma de Pagamento</p>
+        <p class="large-light">{{ recurrence.payment_type | paymentMethod }}</p>
+      </span>
+      <span>
+        <p class="large-light">Adesão</p>
+        <p class="large-light">{{ recurrence.created | date: 'dd/MM/yyyy' }}</p>
+      </span>
+      <span>
+        <p class="large-light">Próxima recorrência</p>
+        <p class="large-light">{{ recurrence.next_date | date: 'dd/MM/yyyy'}}</p>
+      </span>
+      <span>
+        <p class="large-light">Pedido</p>
+        <p class="large-light">{{ recurrence.id }}</p>
+      </span>
+    </div>
+  </div>
+</mat-dialog-content>

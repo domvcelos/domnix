@@ -1,0 +1,124 @@
+<mat-dialog-content>
+  <div class="close-wrapper">
+    <button mat-button mat-dialog-close *ngIf="!loading" name="modal-close-btn">
+      <img src="../../../../assets/icons/close-square.svg" />
+    </button>
+  </div>
+  <div class="content">
+    <div class="loading-shade" *ngIf="loading">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="logo">
+      <img src="../../../../../assets/nix-empresas-logo-black.svg" />
+    </div>
+    <mat-horizontal-stepper linear #stepper>
+      <mat-step label="Step1">
+          <ng-template matStepLabel>Confirmar dados</ng-template>
+          <div class="recipient">
+            <span>
+              <p class="large-light">Destinatário</p>
+              <h3 class="bold">{{ checkOutOrder.recipient_name }}</h3>
+            </span>
+          </div>
+          <div class="recipient-details">
+            <span>
+              <p class="large-light">CPF/CNPJ:</p>
+              <p class="large-light">{{ checkOutOrder.recipient_social_number | cpfCnpj }}</p>
+            </span>
+            <span *ngIf="checkOutOrder.recipient_account_type != 'DIGITAL_ACCOUNT'">
+              <p class="large-light">Banco:</p>
+              <p class="large-light">{{ transferExtraData.bankCodeName }}</p>
+            </span>
+            <span *ngIf="checkOutOrder.recipient_account_type != 'DIGITAL_ACCOUNT'">
+              <p class="large-light">Agência:</p>
+              <p class="large-light">{{ checkOutOrder.recipient_branch }}</p>
+            </span>
+            <span>
+              <p class="large-light">Conta:</p>
+              <p class="large-light">{{ checkOutOrder.recipient_account +' - '+ checkOutOrder.recipient_account_digit }}</p>
+            </span>
+            <span>
+              <p class="large-light">Tipo de conta:</p>
+              <p class="large-light">{{ getAccountType() }}</p>
+            </span>
+            <hr />
+            <span>
+              <p class="large-regular">Valor a ser transferido:</p>
+              <h3 class="bold">{{ checkOutOrder.amount | currency }}</h3>
+            </span>
+            <span *ngIf="checkOutOrder.recipient_account_type != 'DIGITAL_ACCOUNT'">
+              <p class="large-light">Taxa:</p>
+              <p class="large-light">
+                {{ getFeeValue() | currency }}
+              </p>
+            </span>
+            <span *ngIf="checkOutOrder.recipient_account_type != 'DIGITAL_ACCOUNT'">
+              <p class="large-light">Total de valor transferido + taxa:</p>
+              <p class="large-light">
+                {{ getTransferTotal() | currency }}
+              </p>
+            </span>
+          </div>
+          <div class="actions">
+            <button class="main-button" (click)="next(transferFormStep.transfer)" mat-button matStepperNext id="send-confirmation-btn">Confirmar Transferência</button>
+          </div>
+      </mat-step>
+      <mat-step label="Step2" completed="false">
+        <form [formGroup]="passwordFormGroup" class="form-wrapper">
+          <ng-template matStepLabel>Confirmar transação</ng-template>
+            <p class="large-light">Para confirmar e finalizar sua transação,
+              digite sua senha de acesso.</p>
+            <mat-form-field class="mat-form-field" appearance="outline">
+              <mat-label>Senha</mat-label>
+              <input matInput formControlName="password" required type="password">
+            </mat-form-field>
+          <div class="actions">
+            <button mat-button matStepperPrevious class="main-button-inverse">Voltar</button>
+            <button mat-button (click)="next(transferFormStep.password)" class="main-button">Confirmar Transferência</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step label="Step3">
+        <ng-template matStepLabel>Comprovante</ng-template>
+        <div class="proof-title">
+          <span>
+            <p class="small-regular">Comprovante de transferência</p>
+            <p class="large-bold black">Transferência para {{transferExtraData.transferType == 'BANK' ? 'outro banco' : 'uma conta NIX'}}</p>
+          </span>
+        </div>
+        <div class="proof-details">
+          <span class="vertical">
+            <p class="small-regular">Conta de origem</p>
+            <p class="regular-regular ">{{company?.official_name}}</p>
+            <p class="regular-regular ">conta: {{company?.bank_account.account_number +' - '+company?.bank_account.account_digit}}</p>
+            <p class="regular-regular ">Conta Nix</p>
+          </span>
+          <span class="vertical">
+            <p class="small-regular">Conta de destino</p>
+            <p class="regular-regular ">{{ checkOutOrder.recipient_name }}</p>
+            <p class="regular-regular ">Agência: {{ checkOutOrder.recipient_branch }}</p>
+            <p class="regular-regular ">Conta: {{checkOutOrder.recipient_account +' - '+ checkOutOrder.recipient_account_digit}}</p>
+            <p class="regular-regular ">{{ transferExtraData.bankCodeName }}</p>
+          </span>
+          <span>
+            <p class="large-regular">Valor transferido:</p>
+            <h3 class="large-bold">{{ checkOutOrder.amount | currency}}</h3>
+          </span>
+          <!-- <span class="center">
+            <p class="regular-bold">Transferência de Master Card final 0000</p>
+            </span> -->
+            <hr />
+            <span class="vertical">
+              <p class="small-regular">Autenticação</p>
+              <p class="regular-regular ">{{authenticationCode}}</p>
+              <p class="regular-regular ">Pagamento realizado em {{ transferDate | date: 'dd/MM/yyyy \'às\' HH:mm' }}</p>
+            </span>
+        </div>
+        <div class="actions">
+          <button mat-button class="main-button-inverse" (click)="download()">Fazer download</button>
+          <button mat-button class="main-button" (click)="sendEmail()">Enviar por e-mail</button>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </div>
+</mat-dialog-content>

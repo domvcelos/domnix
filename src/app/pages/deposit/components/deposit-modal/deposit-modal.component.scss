@@ -1,0 +1,39 @@
+.recipient-details {
+  .actions {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    button {
+      width: 100px;
+      height: 65px;
+    }
+  }
+  span {
+    &.vertical-span {
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      p {
+        color: var(--nix-grey-primary);
+        &.barcodei2of5 {
+          color: var(--nix-black);
+        }
+      }
+    }
+    &.copy-cat {
+      justify-content: center;
+      p {
+        margin-left: 10px;
+        cursor: pointer;
+        color: var(--nix-green);
+      }
+    }
+  }
+}
+
+mat-dialog-content {
+  .content {
+    padding: 32px 90px;
+  }
+}

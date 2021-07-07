@@ -1,0 +1,34 @@
+<aside>
+  <div class="bottom-aside">
+    <mat-accordion class="headers-align" multi>
+      <mat-expansion-panel
+        *ngFor="let menu of menuList"
+        [hideToggle]="menu.id === 'sb-conciliation' && storage.nexxCardActived ? false : true"
+        [disabled]="menu.id === 'sb-conciliation' && storage.nexxCardActived ? false : true"
+      >
+        <mat-expansion-panel-header
+          class="list-item"
+          (click)="menu.id === 'sb-conciliation' && storage.nexxCardActived ? '' : navigateTo(menu.path)"
+          id="{{ menu.id }}"
+        >
+          <mat-panel-title>
+            <img
+              src="{{ '../../../assets/icons/' + menu.icon }}"
+              alt="{{ menu.icon }}"
+            />
+            <p>{{ menu.label }}</p></mat-panel-title
+          >
+        </mat-expansion-panel-header>
+        <ul>
+          <li
+            class="list-item"
+            *ngFor="let subMenu of menu.subMenu"
+            (click)="navigateTo(subMenu.path)"
+          >
+            {{ subMenu.label }}
+          </li>
+        </ul>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+</aside>

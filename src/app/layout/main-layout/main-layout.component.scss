@@ -1,0 +1,51 @@
+#main-layout {
+  display: grid;
+  height: 100vh;
+  grid-template-columns: var(--sidebar-width) auto;
+  grid-template-rows: 140px auto;
+  grid-template-areas:
+    'NV NV'
+    'SB BD';
+}
+app-header {
+  grid-area: NV;
+}
+app-sidebar {
+  grid-area: SB;
+  overflow-y: auto;
+}
+#grid-body {
+  grid-area: BD;
+  background-color: var(--nix-grey-secondary);
+  height: 100%;
+  border-top-left-radius: 8px;
+  padding: 2rem 2rem 0;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+@media only screen and (max-width: 1024px) {
+  #main-layout {
+    display: flex;
+    height: 100vh;
+    flex-direction: column;
+  }
+  app-sidebar {
+    display: none;
+  }
+  app-header {
+    z-index: 2;
+  }
+  #grid-body {
+    border-top-left-radius: 0;
+  }
+}
+@media only screen and(min-width: 319px) and (max-width: 425px) {
+  #grid-body {
+    padding: 26px 16px 0 !important;
+  }
+}
+@media only screen and (max-height: 768px) {
+  #grid-body {
+    padding: 15px !important;
+  }
+}

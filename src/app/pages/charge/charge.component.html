@@ -1,0 +1,105 @@
+<div class="action-bar-header">
+  <span class="inside-nav"><a [routerLink]="['/home']">Home</a> > Cobrar</span>
+  <div class="action-bar">
+    <app-action-bar></app-action-bar>
+  </div>
+</div>
+<div class="content">
+  <div class="card">
+    <section>
+      <h3 class="bold-text">Selecione a forma de cobrança</h3>
+      <div class="radio-list">
+        <span>
+          <div class="icon-list">
+            <img src="../../../assets/icons/card.svg" />
+            <img src="../../../assets/icons/boleto.svg" />
+            <img src="../../../assets/nix.svg" />
+          </div>
+          <label for="card" class="regular-light" style="width: 140px"
+            >Cartão de crédito, boleto ou conta nix</label
+          >
+          <input
+            type="radio"
+            id="card"
+            name="chargeRadio"
+            value="card"
+            [(ngModel)]="productRadio"
+            checked
+          />
+        </span>
+        <span>
+          <div class="icon-list">
+            <img src="../../../assets/icons/carne.svg" />
+          </div>
+          <label for="payment-book" class="regular-light">Carnê</label>
+          <input
+            type="radio"
+            id="payment-book"
+            name="chargeRadio"
+            value="payment-book"
+            [(ngModel)]="productRadio"
+          />
+        </span>
+        <span>
+          <div class="icon-list">
+            <img src="../../../assets/icons/pix.svg" />
+          </div>
+          <label for="pix" class="regular-light" style="width: 140px"
+            >Recebimento por PIX</label
+          >
+          <input
+            type="radio"
+            id="pix"
+            name="pixRadio"
+            value="pix"
+            [(ngModel)]="productRadio"
+          />
+        </span>
+      </div>
+    </section>
+    <section>
+      <fieldset *ngIf="productRadio === 'pix'">
+        <app-pix></app-pix>
+      </fieldset>
+      <fieldset *ngIf="productRadio === 'card' || productRadio === 'payment-book'">
+        <form (ngSubmit)="openDialog()">
+          <mat-form-field class="material-form" appearance="outline">
+            <mat-label>Digite aqui Nome ou Razão Social</mat-label>
+            <input
+              type="text"
+              matInput
+              [formControl]="myControl"
+              [matAutocomplete]="auto"
+              name="name-socialnumber"
+            />
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+              <mat-option
+                *ngFor="let option of filteredOptions$ | async"
+                [value]="option"
+                (onSelectionChange)="getSelectedSubPeople(option)"
+              >
+                {{ option.name }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <div class="wrapper-button" *ngIf="buttonControl.visibleButton">
+            <button
+              class="main-button"
+              [disabled]="!buttonControl.enableButton"
+              type="submit"
+              id="new-contact-btn"
+            >
+              Novo contato
+            </button>
+          </div>
+        </form>
+        <mat-accordion class="mat-accordion-form" multi>
+          <mat-expansion-panel>
+            <app-card-form *ngIf="productRadio === 'card'"></app-card-form>
+            <app-payment-book-form *ngIf="productRadio === 'payment-book'"></app-payment-book-form>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </fieldset>
+    </section>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<div class="content">
+  <div class="header">
+    <img src="../../../assets/nix-empresas-logo-black.svg" />
+  </div>
+  <div class="body">
+    <div class="card">
+      <div class="card-content">
+        <img *ngIf="isStatusError()" src="../../../assets/icons/error.svg" style="margin-bottom: -15px;" alt="error-icon" width="50px"/>
+        <h3 *ngIf="isStatusWaitingPayment()">Pagamento não realizado</h3>
+        <h3 *ngIf="isStatusPending()">Cadastro em análise</h3>
+        <h3 *ngIf="isStatusError()">Algo deu errado</h3>
+
+        <p *ngIf="isStatusWaitingPayment()">
+          Não identificamos o pagamento em nossa base de dados. 
+          Por favor, realize o pagamento e aproveite todas as nossas funcionalidades.
+        </p>
+        <p *ngIf="isStatusPending()">
+          Identificamos que seu cadastro ainda está em análise. Avisaremos por e-mail assim que aprovado.
+        </p>
+        <p *ngIf="isStatusError()">
+          Algo deu errado em nossos sistemas e estamos verificando o motivo. 
+          Por favor, aguarde alguns instantes e tente novamente mais tarde.
+        </p>
+
+          <button *ngIf="isStatusWaitingPayment()" mat-button class="main-button" id="signin-not-complete-checkoutlink" (click)="getCheckoutLink()">Realizar pagamento</button>
+          <button *ngIf="isStatusError() || isStatusPending() " mat-button class="main-button" id="signin-not-complete-checkoutlink" (click)="goHome()">Voltar para o login</button>
+          <a *ngIf="isStatusWaitingPayment()" [routerLink]="" id="company-goback" (click)="goHome()">Voltar para o login</a>
+      </div>
+    </div>
+  </div>
+</div>

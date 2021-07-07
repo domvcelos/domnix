@@ -1,0 +1,380 @@
+<div class="content">
+    <div class="loading-shade" *ngIf="loading">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="card" *ngIf="!isFinished">
+      <div class="logo">
+        <img
+          src="../../../assets/nix-empresas-logo-black.svg"
+          alt="nix"
+          (click)="navigateTo('/')"
+          name="logo-nix"
+        />
+      </div>
+      <mat-horizontal-stepper labelPosition="bottom" linear #stepper>
+        <mat-step [stepControl]="signInFormGroup" [editable]="editable">
+          <form [formGroup]="signInFormGroup">
+            <ng-template matStepLabel>Dados pessoais</ng-template>
+            <div>
+              <mat-form-field class="material-form" appearance="outline">
+                <mat-label>Nome de registro</mat-label>
+                <input
+                  type="text"
+                  matInput
+                  name="name"
+                  required
+                  formControlName="name"
+                />
+                <mat-error>
+                  <p *ngIf="signInFormGroup.controls['name'].errors?.required">
+                    Nome de registro é um campo obrigatório.
+                  </p>
+                  <p *ngIf="signInFormGroup.controls['name'].errors?.pattern">
+                    Informe o nome completo.
+                  </p>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="two-inputs">
+              <mat-form-field class="material-form" appearance="outline">
+                <mat-label>Nome social</mat-label>
+                <input
+                  type="text"
+                  matInput
+                  name="social_name"
+                  required
+                  formControlName="social_name"
+                />
+                <mat-error>
+                  <p *ngIf="signInFormGroup.controls['social_name'].errors?.required">
+                    Nome Social é um campo obrigatório.
+                  </p>
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="material-form" appearance="outline">
+                <mat-label>Nº do CPF</mat-label>
+                <input
+                  type="text"
+                  matInput
+                  name="cpf"
+                  required
+                  formControlName="cpf"
+                  mask="000.000.000-00"
+                />
+                <mat-error>
+                  <p *ngIf="signInFormGroup.controls['cpf'].errors?.required">
+                    CPF é um campo obrigatório.
+                  </p>
+                  <p
+                    *ngIf="
+                      signInFormGroup.controls['cpf'].errors?.mask ||
+                      signInFormGroup.controls['cpf'].errors?.invalidCpf
+                    "
+                  >
+                    CPF inválido.
+                  </p>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="three-inputs">
+              <mat-form-field class="material-form" appearance="outline">
+                <mat-label>Data de nascimento</mat-label>
+                <input
+                  type="text"
+                  matInput
+                  name="birthday"
+                  required
+                  formControlName="birthday"
+                  mask="00/00/0000"
+                  minDate="2021-02-14"
+                />
+                <mat-error>
+                  <p *ngIf="signInFormGroup.controls['birthday'].errors?.required">
+                    Data de nascimento é um campo obrigatório.
+                  </p>
+                  <p *ngIf="!signInFormGroup.controls['birthday'].errors?.required && (signInFormGroup.controls['birthday'].errors?.invalidDate || signInFormGroup.controls['birthday'].errors?.mask)">
+                    Data de nascimento inválida.
+                  </p>
+                  <p *ngIf="!signInFormGroup.controls['birthday'].errors?.required && signInFormGroup.controls['birthday'].errors?.minAge">
+                    Você precisa ter ao menos 16 anos.
+                  </p>
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="material-form" appearance="outline">
+                <mat-label>Telefone</mat-label>
+                <input
+                  type="text"
+                  matInput
+                  name="phone"
+                  required
+                  mask="(00) 00000-0000||(00) 0000-0000"
+                  formControlName="phone"
+                />
+                <mat-error>
+                  <p *ngIf="signInFormGroup.controls['phone'].errors?.required">
+                    Telefone é um campo obrigatório.
+                  </p>
+                  <p *ngIf="signInFormGroup.controls['phone'].errors?.mask">
+                    Telefone inválido.
+                  </p>
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="material-form" appearance="outline">
+                <mat-label>Nome da mãe</mat-label>
+                <input
+                  type="text"
+                  matInput
+                  name="motherName"
+                  required
+                  formControlName="mother_name"
+                />
+                <mat-error>
+                  <p
+                    *ngIf="
+                      signInFormGroup.controls['mother_name'].errors?.required
+                    "
+                  >
+                    Nome da Mãe é um campo obrigatório.
+                  </p>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="three-inputs">
+              <mat-form-field class="material-form" appearance="outline">
+                <mat-label>E-mail</mat-label>
+                <input
+                  type="email"
+                  matInput
+                  name="email"
+                  required
+                  formControlName="email"
+                />
+                <mat-error>
+                  <p *ngIf="signInFormGroup.controls['email'].errors?.required">
+                    Email é obrigatório.
+                  </p>
+                  <p *ngIf="signInFormGroup.controls['email'].errors?.email">
+                    Insira um email válido.
+                  </p>
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="material-form" appearance="outline">
+                <mat-label>Senha</mat-label>
+                <input
+                  type="password"
+                  matInput
+                  name="password"
+                  required
+                  formControlName="password"
+                />
+                <mat-error>
+                  <p
+                    *ngIf="signInFormGroup.controls['password'].errors?.required"
+                  >
+                    Senha é um campo obrigatório.
+                  </p>
+                  <p
+                    *ngIf="signInFormGroup.controls['password'].errors?.minlength"
+                  >
+                    A senha deve ter no mínimo 6 dígitos.
+                  </p>
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="material-form" appearance="outline">
+                <mat-label>Digite novamente a senha</mat-label>
+                <input
+                  type="password"
+                  matInput
+                  name="confirmPassword"
+                  required
+                  formControlName="confirmPassword"
+                />
+                <mat-error>
+                  <p
+                    *ngIf="
+                      signInFormGroup.controls['confirmPassword'].errors?.required
+                    "
+                  >
+                    Senha é um campo obrigatório.
+                  </p>
+                  <p
+                    *ngIf="
+                      signInFormGroup.controls['confirmPassword'].errors
+                        ?.minlength
+                    "
+                  >
+                    A senha deve ter no mínimo 6 dígitos.
+                  </p>
+                  <p
+                    *ngIf="
+                      signInFormGroup.controls['confirmPassword'].errors
+                        ?.mustMatch
+                    "
+                  >
+                    Senhas não conferem.
+                  </p>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="actions">
+              <button mat-button id="id-user-next" class="main-button" matStepperNext>
+                Próximo
+              </button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step [stepControl]="addressFormGroup" [editable]="editable">
+          <form [formGroup]="addressFormGroup">
+            <ng-template matStepLabel>Endereço</ng-template>
+            <div class="step-address-section">
+              <div class="two-inputs">
+                <mat-form-field class="material-form w20" appearance="outline">
+                  <mat-label>CEP</mat-label>
+                  <input
+                    type="text"
+                    matInput
+                    name="zip_code"
+                    required
+                    formControlName="zip_code"
+                    mask="00000-000"
+                    (blur)="fetchAddress()"
+                  />
+                  <mat-error>
+                    <p
+                      *ngIf="
+                        addressFormGroup.controls['zip_code'].errors?.required
+                      "
+                    >
+                      CEP é um campo obrigatório.
+                    </p>
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="material-form" appearance="outline">
+                  <mat-label>Nome da rua</mat-label>
+                  <input
+                    type="text"
+                    matInput
+                    name="street"
+                    required
+                    formControlName="street"
+                  />
+                  <mat-error>
+                    <p
+                      *ngIf="addressFormGroup.controls['street'].errors?.required"
+                    >
+                      Endereço é um campo obrigatório.
+                    </p>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+              <div class="three-inputs">
+                <mat-form-field class="material-form w20" appearance="outline">
+                  <mat-label>Número</mat-label>
+                  <input
+                    type="text"
+                    matInput
+                    name="number"
+                    maxlength="8"
+                    required
+                    formControlName="number"
+                  />
+                  <mat-error>
+                    <p
+                      *ngIf="addressFormGroup.controls['number'].errors?.required"
+                    >
+                      Número é um campo obrigatório.
+                    </p>
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="material-form" appearance="outline">
+                  <mat-label>Bairro</mat-label>
+                  <input
+                    type="text"
+                    matInput
+                    name="neighborhood"
+                    required
+                    formControlName="neighborhood"
+                  />
+                  <mat-error>
+                    <p
+                      *ngIf="
+                        addressFormGroup.controls['neighborhood'].errors?.required
+                      "
+                    >
+                      Bairro é um campo obrigatório.
+                    </p>
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="material-form" appearance="outline">
+                  <mat-label>Complemento</mat-label>
+                  <input type="text" matInput name="complement" formControlName="complement" autocomplete="off"/>
+                </mat-form-field>
+              </div>
+              <div class="two-inputs">
+                <mat-form-field class="material-form w16" appearance="outline">
+                  <mat-label>Cidade</mat-label>
+                  <input
+                    type="text"
+                    matInput
+                    name="city"
+                    required
+                    formControlName="city"
+                  />
+                  <mat-error>
+                    <p *ngIf="addressFormGroup.controls['city'].errors?.required">
+                      Cidade é um campo obrigatório.
+                    </p>
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="material-form w26" appearance="outline">
+                  <mat-label>Estado</mat-label>
+                  <mat-select
+                    id="state"
+                    formControlName="state"
+                    name="state"
+                    required
+                  >
+                    <mat-option
+                      *ngFor="let state of states"
+                      [value]="state.value"
+                    >
+                      {{ state.viewValue }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>
+                    <p
+                      *ngIf="addressFormGroup.controls['state'].errors?.required"
+                    >
+                      Estado é um campo obrigatório.
+                    </p>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+          </form>
+          <div class="actions">
+            <button mat-button id="id-btn-user-signin" class="main-button" (click)="signIn()">
+              Finalizar Cadastro
+            </button>
+          </div>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Finalizado</ng-template>
+          <div class="success-wrapper">
+            <img
+              src="../../../assets/icons/success.svg"
+              alt="success"
+              width="50"
+              height="50"
+            />
+            <h3 class="bold">Cadastro realizado com sucesso!</h3>
+            <p class="large-regular">
+              Confirme seu cadastro através do link que enviamos em  seu e-mail.
+            </p>
+            <a [routerLink]="['/']">Voltar para o início</a>
+          </div>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </div>
+  </div>
+  

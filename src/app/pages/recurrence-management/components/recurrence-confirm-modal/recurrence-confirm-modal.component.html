@@ -1,0 +1,63 @@
+<mat-dialog-content>
+  <div class="close-wrapper">
+    <button mat-button mat-dialog-close *ngIf="!loading" name="modal-close-btn">
+      <img src="../../../../assets/icons/close-square.svg" />
+    </button>
+  </div>
+  <div class="content">
+    <div class="loading-shade" *ngIf="loading">
+      <mat-spinner></mat-spinner>
+    </div>
+    <mat-horizontal-stepper linear #stepper labelPosition="bottom">
+      <mat-step [editable]="false">
+        <ng-template matStepLabel>Confirmação</ng-template>
+        <div class="logo">
+          <img src="../../../../../assets/nix-empresas-logo-black.svg" />
+        </div>
+        <div class="recipient-data">
+          <span>
+            <p class="large-light">Destinatário</p>
+            <h3 class="bold">{{ data.people.name }}</h3>
+          </span>
+        </div>
+        <div class="payment-data">
+          <span>
+            <p class="large-light">Valor da assinatura</p>
+            <p class="large-light">{{ data.plan.amount / 100 | currency }}</p>
+          </span>
+          <span>
+            <p class="large-light">Total a ser pago pelo cliente:</p>
+            <h3 class="bold">{{ data.plan.amount / 100 | currency }}</h3>
+          </span>
+          <hr />
+          <span>
+            <p class="large-light">Taxa</p>
+            <p class="large-light">{{ data.fee | currency }}</p>
+          </span>
+          <span>
+            <p class="large-light">Total a receber:</p>
+            <h3 class="bold">{{ data.totalToReceive | currency }}</h3>
+          </span>
+          <span>
+            <button
+              class="main-button"
+              (click)="saveSubscription()"
+              name="confirm-btn"
+            >
+              Confirmar cadastro da adesão
+            </button>
+          </span>
+        </div>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Concluído</ng-template>
+        <div class="response-content" *ngIf="contactSaved">
+          <img src="../../../../assets/icons/success.svg" />
+          <p class="regular-light">
+            Solicitação de adesão enviada por e-mail com sucesso!
+          </p>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </div>
+</mat-dialog-content>

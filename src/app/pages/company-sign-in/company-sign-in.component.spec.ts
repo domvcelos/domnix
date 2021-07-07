@@ -1,0 +1,62 @@
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatStepperModule } from '@angular/material/stepper';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
+
+import { NgxImageCompressService } from 'ngx-image-compress';
+import { NgxMaskModule } from 'ngx-mask';
+import { ToastrModule } from 'ngx-toastr';
+
+import { Utils } from 'src/app/common/utils';
+import { CompanySignInRoutingModule } from './company-sign-in-routing.module';
+import { CompanySignInComponent } from './company-sign-in.component';
+
+
+describe('CompanySignInComponent', () => {
+  let component: CompanySignInComponent;
+  let fixture: ComponentFixture<CompanySignInComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [
+        CommonModule,
+        BrowserAnimationsModule,
+        RouterTestingModule,
+        CompanySignInRoutingModule,
+        MatFormFieldModule,
+        MatInputModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        ToastrModule.forRoot(),
+        MatExpansionModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatStepperModule,
+        MatIconModule,
+        NgxMaskModule.forRoot(),
+      ],
+      declarations: [CompanySignInComponent],
+      providers: [Utils, NgxImageCompressService],
+    }).compileComponents();
+  });
+
+  beforeEach(() => {
+    fixture = TestBed.createComponent(CompanySignInComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  xit('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

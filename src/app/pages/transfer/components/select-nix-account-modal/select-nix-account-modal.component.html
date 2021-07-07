@@ -1,0 +1,62 @@
+<mat-dialog-content>
+  <div class="close-wrapper">
+    <button mat-button mat-dialog-close name="modal-close-btn" *ngIf="!loading"> 
+      <img src="../../../../assets/icons/close-square.svg" />
+    </button>
+  </div>
+  <div class="content">
+    <div class="loading-shade" *ngIf="loading">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="body">
+        <p class="large-bold">Pesquise por uma conta NIX para a transferência</p>
+        <mat-form-field  class="material-form" appearance="outline">
+          <mat-label>Pesquise por CPF/CNPJ, Conta NIX, telefone ou e-mail</mat-label>
+          <input matInput type="text" [(ngModel)]="searchInput" (blur)="onBlur()" name="search-input" autocomplete="off">
+        </mat-form-field>
+
+        <div class="contact-list" *ngIf="nixAccount">
+          <div mat-stroked-div class="contact-list-item" (click)="useNixAccount()">
+            <div class="top">
+              <p class="regular-bold name-p">
+                {{nixAccount.name}}
+              </p>
+              <span class="tag-document-type">{{nixAccount.customer_id.length === 11 ? 'Pessoa física': 'Pessoa jurídica'}}</span>
+            </div>
+            <div class="bottom">
+              <div class="left">
+                <p class="extra-small-regular" *ngIf="nixAccount.customer_id.length === 11">
+                  CPF: {{nixAccount.customer_id | cpfCnpj }}
+                </p>
+                <p class="extra-small-regular" *ngIf="nixAccount.customer_id.length === 14">
+                  CNPJ: {{nixAccount.customer_id | cpfCnpj}}
+                </p>
+                <p class="extra-small-regular">
+                  Email: {{nixAccount.email }}
+                </p>
+              </div>
+              <div class="right">
+                <p class="extra-small-regular">
+                  Conta: {{nixAccount.account_number+' - '+nixAccount.account_check_digit }}
+                </p>
+                <p class="extra-small-regular">
+                  Telefone: {{getFormattedPhone()}}
+                </p>
+              </div>
+             
+            </div>
+          </div>
+        </div>
+       
+        <div *ngIf="!nixAccount && !loading" class="div-error" >
+            <img src="../../../../../assets/icons/error.svg" alt="error-icon" width="60px"/>
+            <p class="large-regular">Nenhuma conta encontrada</p>
+            <p class="large-regular sub-text">Não foi possível encontrar uma conta.
+              Por favor, tente novamente.</p>
+
+          <div class="wrapper-button">
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-dialog-content>

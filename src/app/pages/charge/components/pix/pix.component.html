@@ -1,0 +1,38 @@
+<div class="content">
+  <div class="content-left">
+    <p class="large-regular">
+      A opção de recebimento por Pix é uma forma fácil e rápida de receber. Siga
+      as instruções:
+    </p>
+    <ul>
+      <li class="large-regular">
+        Para receber via Pix, você pode copiar as seguintes informações e
+        encaminhar para o pagante
+      </li>
+      <li class="large-regular">
+        Com as informações em mãos, o pagante irá escolher a opção Pix com dados
+        bancários
+      </li>
+      <li class="large-regular">
+        O pagante irá digitar as informações que você compartilhou, informar o
+        valor e realizar o pagamento.
+      </li>
+    </ul>
+  </div>
+  <div class="content-right">
+    <div class="pix-box">
+      <div class="pix-box-info">
+        <p class="large-regular"><strong>Banco: </strong>{{ bank }}</p>
+        <p class="large-regular"><strong>Nome: </strong>{{ name }}</p>
+        <div class="in-line">
+          <p class="large-regular"><strong>Agência: </strong>{{ branch }}</p>
+          <p class="large-regular"><strong>Conta: </strong>{{ account }}</p>
+        </div>
+        <p class="large-regular">
+          <strong>CNPJ: </strong>{{ documentNumber | cpfCnpj }}
+        </p>
+      </div>
+      <button class="main-button" (click)="copy()">Copiar informações</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,30 @@
+<mat-dialog-content>
+  <div class="close-wrapper">
+    <button mat-button mat-dialog-close name="modal-close-btn">
+      <img src="../../../../assets/icons/close-square.svg" />
+    </button>
+  </div>
+  <div class="content">
+    <div class="logo">
+      <img src="../../../../../assets/nix-empresas-logo-black.svg" />
+    </div>
+    <div class="recipient-details">
+      <span>
+        <p class="regular-light nix-grey-01">Tópico:</p>
+        <p class="regular-regular nix-black-02">{{ translateCategory(notification.category) }}</p>
+      </span>
+      <span>
+        <p class="regular-light nix-grey-01">Mensagem:</p>
+        <p class="regular-regular nix-black-02" style="text-align: end; margin-left: 8px !important;">{{ notification.message }}</p>
+      </span>
+      <span>
+        <p class="regular-light nix-grey-01">Notificado:</p>
+        <p class="regular-regular nix-black-02">{{ notification.created | date: 'dd/MM/yyyy HH:mm' }}</p>
+      </span>
+      <span>
+        <p class="regular-light nix-grey-01">Status:</p>
+        <p class="regular-regular nix-black-02">{{ notification.read ? 'Lido' : 'Não lido' }}</p>
+      </span>
+    </div>
+  </div>
+</mat-dialog-content>

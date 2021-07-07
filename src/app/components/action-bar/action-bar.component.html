@@ -1,0 +1,54 @@
+<div class="action-content">
+  <div class="action-content-left">
+    <h3>
+      Olá,
+      <strong style="text-transform: capitalize">{{ getUserName() }}!</strong>
+      O que você gostaria de fazer hoje?
+    </h3>
+    <div class="action-buttons">
+      <div
+        *ngFor="let action of actionList"
+        class="box"
+        [ngClass]="{ active: path === action.path }"
+        (click)="navigateTo(action.path)"
+        id="{{ action.id }}"
+      >
+        <div class="inside-box">
+          <div [ngClass]="'icon-content ' + action.icon"></div>
+        </div>
+        <p>{{ action.label }}</p>
+      </div>
+    </div>
+  </div>
+  <div class="action-content-right">
+    <div class="card" *ngIf="path === '/home'">
+      <div class="card-top">
+        <div class="card-top-left">
+          <p>Saldo em conta</p>
+        </div>
+        <div class="card-top-right">
+          <span></span>
+          <span>
+            <p *ngIf="isOpen">{{balance | currency}}</p>
+            <p *ngIf="!isOpen" class="noValue">R$ *****</p>
+            <div
+              name="eye-btn"
+              (click)="hideBalance()"
+              *ngIf="isOpen"
+              class="icon-content eye-open-icon"
+            ></div>
+            <div
+              name="eye-btn"
+              (click)="hideBalance()"
+              *ngIf="!isOpen"
+              class="icon-content eye-close-icon"
+            ></div>
+          </span>
+        </div>
+      </div>
+      <div class="card-bottom">
+        <button mat-button class="blue-btn" id="btn-statement" (click)="navigateTo('/extrato')">Ver extrato</button>
+      </div>
+    </div>
+  </div>
+</div>

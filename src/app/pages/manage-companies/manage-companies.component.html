@@ -1,0 +1,61 @@
+<div class="content">
+    <div class="header">
+        <img src="../../../assets/nix-empresas-logo-black.svg" />
+    </div>
+    <div class="body">
+        <div class="card">
+            <div class="loading-shade" *ngIf="loading">
+                <mat-spinner></mat-spinner>
+            </div>
+            <div class="card-content">
+                <!-- <h3>Selecione uma empresa ou plano</h3> -->
+                <div class="header-title">
+                    <h3>Selecione um plano</h3>
+                    <button class="main-button" type="submit" id="new-plan" (click)="newPlan()">Novo plano</button>
+                </div>
+                <div class="actions">
+                    <!-- <div class="companies">
+                        <mat-form-field class="material-form" appearance="outline">
+                            <mat-label>Empresas</mat-label>
+                            <mat-select id="companies" name="companies" [(value)]="company">
+                              <mat-option *ngFor="let c of companies" [value]="c.name">
+                                  {{ c.name }}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                          <button type="submit" class="main-button" name="companies-btn" (click)="goToCompany()">Entrar no sistema</button>
+                    </div> -->
+                    <div class="plans">
+                        <mat-form-field class="material-form" appearance="outline">
+                            <mat-label>Planos</mat-label>
+                            <mat-select id="plans" name="plans" [(value)]="plan">
+                              <mat-option *ngFor="let p of plans" [value]="p">
+                                  {{ p.plan_name }}
+                              </mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                          <button type="submit" class="main-button" name="plans-btn" (click)="goToPlan()">{{plans && plans.length > 0 ? 'Ver' : 'Criar'}} plano</button>
+                    </div>
+                </div>
+            
+                <div class="info">
+                    <!-- <div class="left">
+                        <p class="title large-bold">Selecionando uma empresa</p>
+                        <p class="text-message regular-regular nix-black-02">
+                            Ao selecionar uma empresa você será direcionado para a conta nix do cliente selecionado, onde será possivel 
+                            visualizar as movimentações, consultar status das transações e emitir e enviar boletos e carnês.
+                        </p>
+                    </div> -->
+                    <div class="right">
+                        <p class="title large-bold">Selecionando um plano</p>
+                        <p class="text-message regular-regular nix-black-02">
+                            Ao selecionar um plano você poderá visualizar ou solicitar alteração de taxas para o plano selecionado 
+                            ou criar novos planos com a opção "Inserir novo plano de taxas".
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  

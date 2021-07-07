@@ -1,0 +1,189 @@
+<mat-dialog-content>
+  <div class="close-wrapper">
+    <button mat-button mat-dialog-close name="modal-close-btn">
+      <img src="../../../../assets/icons/close-square.svg" />
+    </button>
+  </div>
+  <div class="content">
+    <div class="loading-shade" *ngIf="loading">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div class="body">
+      <h3 class="bold">Cartão de crédito</h3>
+
+      <mat-horizontal-stepper linear #stepper labelPosition="bottom">
+        <mat-step [stepControl]="creditCardFormGroup" [editable]="false">
+          <form [formGroup]="creditCardFormGroup">
+            <ng-template matStepLabel>Dados do cartão</ng-template>
+            <div class="form">
+              <mat-form-field appearance="outline">
+                <mat-label>Número do Cartão</mat-label>
+                <input
+                  matInput
+                  type="tel"
+                  formControlName="number"
+                  mask="0000 0000 0000 0000 999"
+                  (ngModelChange)="getBrandByNumber()"
+                  autocomplete="off"
+                />
+                <mat-error>
+                  <p
+                    *ngIf="
+                      creditCardFormGroup.controls['number'].errors?.required
+                    "
+                  >
+                    Número do Cartão é um campo obrigatório.
+                  </p>
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Nome Impresso no Cartão</mat-label>
+                <input
+                  matInput
+                  type="text"
+                  formControlName="name"
+                  autocomplete="off"
+                  maxlength="25"
+                />
+                <mat-error>
+                  <p
+                    *ngIf="
+                      creditCardFormGroup.controls['name'].errors?.required
+                    "
+                  >
+                    Nome Impresso no Cartão do Cartão é um campo obrigatório.
+                  </p>
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline">
+                <mat-label>CPF</mat-label>
+                <input
+                  matInput
+                  type="text"
+                  formControlName="documentValue"
+                  mask="000.000.000-00"
+                  autocomplete="off"
+                />
+                <mat-error>
+                  <p
+                    *ngIf="
+                      creditCardFormGroup.controls['documentValue'].errors
+                        ?.required
+                    "
+                  >
+                    CPF é um campo obrigatório.
+                  </p>
+                  <p
+                  *ngIf="
+                    creditCardFormGroup.controls['documentValue'].errors
+                      ?.invalidCpf
+                  "
+                >
+                  Número de Cpf inválido.
+                </p>
+                </mat-error>
+              </mat-form-field>
+              <div class="three-mat-form">
+                <mat-form-field appearance="outline">
+                  <mat-label>Validade</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    formControlName="expDate"
+                    mask="00/0000"
+                    maxLength="7"
+                    placeholder="00/0000"
+                    autocomplete="off"
+                  />
+                  <mat-error>
+                    <p
+                      *ngIf="
+                        creditCardFormGroup.controls['expDate'].errors
+                          ?.required
+                      "
+                    >
+                    Validade é um campo obrigatório.
+                    </p>
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Código CVV</mat-label>
+                  <input
+                    matInput
+                    type="text"
+                    formControlName="cvv"
+                    mask="0009"
+                    [validation]="false"
+                    minlength="3"
+                    maxlength="4"
+                    autocomplete="off"
+                  />
+                  <mat-error>
+                    <p
+                      *ngIf="
+                        creditCardFormGroup.controls['cvv'].errors
+                          ?.required
+                      "
+                    >
+                    Validade é um campo obrigatório.
+                    </p>
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline">
+                  <mat-label>Bandeira</mat-label>
+                  <mat-select
+                    formControlName="brand"
+                    (ngModelChange)="changeBrand()"
+                  >
+                    <mat-option
+                      *ngFor="let brand of brandsList"
+                      [value]="brand.value"
+                    >
+                      <img
+                        *ngIf="brand.logo != 'none'"
+                        width="30"
+                        height="15"
+                        src="assets/banks-logo/{{ brand.logo }}.png"
+                      />
+                      {{ brand.name }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>
+                    <p
+                      *ngIf="
+                        creditCardFormGroup.controls['brand'].errors
+                          ?.required
+                      "
+                    >
+                    Bandeira é um campo obrigatório.
+                    </p>
+                  </mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="actions">
+              <button
+                class="main-button"
+                mat-button
+                name="save-card-btn"
+                (click)="saveCard()"
+              >
+                Cadastrar cartão
+              </button>
+            </div>
+          </form>
+        </mat-step>
+        <mat-step>
+          <ng-template matStepLabel>Concluído</ng-template>
+          <div class="response-content">
+            <img src="../../../../assets/icons/success.svg" />
+            <p class="regular-light">Seu cartão foi cadastrado com sucesso!</p>
+          </div>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </div>
+  </div>
+</mat-dialog-content>

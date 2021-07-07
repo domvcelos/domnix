@@ -1,0 +1,67 @@
+fieldset {
+  display: flex;
+  justify-content: center;
+  padding: 40px 80px;
+  flex-direction: column;
+  border: none;
+  .material-form {
+    width: 100%;
+  }
+  .mat-accordion-form {
+    margin-top: 20px;
+    text-align: center;
+    mat-expansion-panel {
+      box-shadow: none !important;
+    }
+    .form {
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      label {
+        margin: 0 !important;
+      }
+      span {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        &.two-input {
+          :first-child {
+            margin-right: 15px;
+          }
+          :last-child {
+            margin-left: 15px;
+          }
+        }
+        &.three-input {
+          :nth-child(2) {
+            margin-left: 30px;
+          }
+        }
+        textarea {
+          height: 150px;
+        }
+        &:last-child {
+          justify-content: flex-end;
+          button {
+            width: 250px;
+            height: 50px;
+          }
+        }
+      }
+      .mat-form-field {
+        width: 100%;
+      }
+    }
+  }
+  .wrapper-button {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    button {
+      width: 132px;
+    }
+  }
+}
+.mat-error {
+  margin: 0 -1em !important;
+}

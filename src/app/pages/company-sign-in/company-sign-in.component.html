@@ -1,0 +1,405 @@
+<div class="content">
+  <div class="loading-shade" *ngIf="loading">
+    <mat-spinner></mat-spinner>
+  </div>
+  <div class="card">
+    <div class="logo">
+      <img
+        src="../../../assets/nix-empresas-logo-black.svg"
+        alt="nix"
+        (click)="navigateTo('/')"
+        name="logo-nix"
+      />
+    </div>
+    <mat-horizontal-stepper labelPosition="bottom" linear #stepper>
+      <mat-step completed="false">
+        <form [formGroup]="channelCodeFormGroup">
+          <ng-template matStepLabel>Código</ng-template>
+          <div class="step-wrapper">
+            <h3 class="bold mb-40">Código de validação</h3>
+            <p class="small-regular codemsg">Digite o código fornecido para validar seu cadastro.</p>
+            <div class="code-channel">
+              <mat-form-field class="material-form w20" appearance="outline">
+                <mat-label>Digite o código de validação</mat-label>
+                <input type="text" matInput name="channelCode" required formControlName="channelCode" autocomplete="off"/>
+                <mat-error> 
+                  <p *ngIf="channelCodeFormGroup.controls['channelCode'].errors?.required">Código de validação é um campo obrigatório.</p>
+                  <p *ngIf="channelCodeFormGroup.controls['channelCode'].errors?.incorrect">Código de validação incorreto.</p>
+                  <p *ngIf="channelCodeFormGroup.controls['channelCode'].errors?.inactive">Código de validação não está mais ativo.</p>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="actions">
+            <button class="main-button" id="channel-code-btn" mat-button (click)="checkChannelCode()">Iniciar meu cadastro</button>
+            <a [routerLink]="" id="company-goback" (click)="goHome()">Voltar para o login</a>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Bem-vindo</ng-template>
+        <div class="step-wrapper">
+          <h3 class="bold mb-40">Bem-vindo ao Nix Empresas</h3>
+          <p class="small-regular">
+            Para ativação de sua conta e garantia de segurança nas transações financeiras é necessário
+            fazer um cadastro bem rápido sobre você, a empresa e os dados bancários.
+            Não se preocupe que os dados estão armazenados com segurança de acordo com a LGPD.
+          </p>
+        </div>
+        <div class="actions">
+          <button class="main-button" id="company-init-form" mat-button matStepperNext>Próximo</button>
+          <a [routerLink]="" id="company-goback" (click)="goHome()">Voltar para o login</a>
+        </div>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Instruções</ng-template>
+        <div class="step-wrapper">
+          <h3 class="bold mb-40">Pronto para continuar?</h3>
+          <p class="small-regular">
+            Agora precisamos de <strong>uma selfie</strong> e de uma foto de um <strong>documento frente
+            e verso</strong> que você escolher entre as opções. Lembrando que sua foto
+            precisa estar com boa qualidade. Não se preocupe, vamos ajudá-lo a
+            enviar uma foto de qualidade.
+          </p>
+        </div>
+        <div class="actions">
+          <button class="main-button" id="company-information" mat-button matStepperNext>Sim, estou pronto!</button>
+          <a [routerLink]="" id="company-goback" (click)="goHome()">Voltar para o login</a>
+        </div>
+      </mat-step>
+      <mat-step [stepControl]="selfieFormGroup">
+        <ng-template matStepLabel>Foto</ng-template>
+        <div class="step-wrapper-section">
+          <div class="top-side">
+            <p class="small-regular">
+              Vamos começar com a <strong>Foto</strong>.
+            </p>
+            <p class="small-bold">
+              Aqui vão algumas dicas para que você envie uma boa foto.
+            </p>
+          </div>
+          <div class="middle">
+            <p class="regular-regular">Seguem algumas dicas</p>
+            <div class="icon-list">
+              <div class="icon">
+                <img src="../../../assets/icons/lamp.svg" />
+                <p class="extra-small-regular">Procure fotos com muita luz</p>
+              </div>
+              <div class="icon">
+                <img src="../../../assets/icons/hat.svg" />
+                <p class="extra-small-regular">
+                  Não pode conter qualquer tipo de chapéu
+                </p>
+              </div>
+              <div class="icon">
+                <img src="../../../assets/icons/glasses.svg" />
+                <p class="extra-small-regular">
+                  Não pode conter óculos de sol ou grau
+                </p>
+              </div>
+              <div class="icon">
+                <img src="../../../assets/icons/person.svg" />
+                <p class="extra-small-regular">
+                  Lembre-se de ser uma foto na vertical e sozinho
+                </p>
+              </div>
+              <div class="icon">
+                <img src="../../../assets/icons/2MB.svg" />
+                <p class="extra-small-regular">
+                  Sua foto deve possuir no máximo 2mb
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="bottom-side">
+            <div>
+              <button
+                mat-button
+                class="file-input-button"
+                (click)="uploadSelfie()"
+                id="company-selfie"
+              >
+                Selecionar imagem
+              </button>
+              <!-- CASO NAO CONSIGA CONVERTER DE BASE64 PARA BLOB -->
+              <!-- <div class="form-group">
+                <label for="file">Choose File</label>
+                <input type="file"
+                       id="file"
+                       (change)="handleFileInput($event.target.files)">
+            </div> -->
+              <p
+                class="extra-small-regular"
+                [textContent]="
+                selfieFormGroup.value.selfie
+                    ? '1 arquivo selecionado'
+                    : 'Nenhum arquivo selecionado'
+                "
+              ></p>
+            </div>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="main-button" id="company-selfie-next" mat-button (click)="checkSelfieUpload()">Próximo</button>
+          <a [routerLink]="" id="company-goback" (click)="goHome()">Voltar para o login</a>
+        </div>
+      </mat-step>
+      <mat-step [stepControl]="docFormGroup">
+        <ng-template matStepLabel>Documento</ng-template>
+        <div class="step-wrapper-section">
+          <div class="top-side">
+            <p class="small-regular">
+              Agora vem a parte de <strong>Documentos</strong>.
+            </p>
+            <p class="small-bold">
+              Selecione um tipo de documento e envie uma foto da parte da frente
+              e do verso.
+            </p>
+          </div>
+          <div class="middle">
+            <p class="regular-regular">Informações importantes</p>
+            <div class="icon-list">
+              <div class="icon">
+                <img src="../../../assets/icons/cnh.svg" />
+                <p class="extra-small-regular">
+                  O documento tem que estar fora do plástico
+                </p>
+              </div>
+              <div class="icon">
+                <img src="../../../assets/icons/desk.svg" />
+                <p class="extra-small-regular">
+                  O documento deve estar em uma superficie plana
+                </p>
+              </div>
+              <div class="icon">
+                <img src="../../../assets/icons/selfie.svg" />
+                <p class="extra-small-regular">
+                  A foto deve ser tirada na vertical
+                </p>
+              </div>
+            </div>
+          </div>
+          <mat-form-field class="docSelect" appearance="outline">
+            <mat-label>Escolha o documento a ser enviado</mat-label>
+            <mat-select [formControl]="docFormControl" name="food">
+              <mat-option value="CNH"> CNH </mat-option>
+              <mat-option value="RG"> RG </mat-option>
+            </mat-select>
+            <mat-error>
+              <p *ngIf="docFormControl.errors?.required">
+                Esse é um campo obrigatório.
+              </p>
+            </mat-error>
+          </mat-form-field>
+          <div class="bottom-side">
+            <div>
+              <button
+                id="company-doc-front"
+                mat-button
+                class="file-input-button"
+                (click)="uploadDocFront()"
+              >
+                Selecionar foto frente
+              </button>
+              <p
+                class="extra-small-regular"
+                [textContent]="
+                docFormGroup.value.docFront
+                    ? '1 arquivo selecionado'
+                    : 'Nenhum arquivo selecionado'
+                "
+              ></p>
+            </div>
+            <div>
+              <button
+                id="company-doc-back"
+                mat-button
+                class="file-input-button"
+                (click)="uploadDocBack()"
+              >
+                Selecionar foto verso
+              </button>
+              <p
+                class="extra-small-regular"
+                [textContent]="
+                docFormGroup.value.docBack
+                    ? '1 arquivo selecionado'
+                    : 'Nenhum arquivo selecionado'
+                "
+              ></p>
+            </div>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="main-button" id="company-doc-next" mat-button (click)="checkDocUpload()">Próximo</button>
+          <a [routerLink]="" id="company-goback" (click)="goHome()">Voltar para o login</a>
+        </div>
+      </mat-step>
+
+      <mat-step [stepControl]="companyFormGroup">
+        <form [formGroup]="companyFormGroup">
+          <ng-template matStepLabel>Dados empresariais</ng-template>
+          <div class="step-section">
+            <div>
+              <mat-form-field class="material-form w20" appearance="outline">
+                <mat-label>Razão social</mat-label>
+                <input type="text" matInput name="razaoSocial" required formControlName="razaoSocial" autocomplete="off"/>
+                <mat-error> <p *ngIf="companyFormGroup.controls['razaoSocial'].errors?.required">Razão social é um campo obrigatório.</p></mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field class="material-form" appearance="outline">
+                <mat-label>Nome fantasia</mat-label>
+                <input type="text" matInput name="nomeFantasia" required formControlName="nomeFantasia" autocomplete="off"/>
+                <mat-error> <p *ngIf="companyFormGroup.controls['nomeFantasia'].errors?.required">Nome fantasia é um campo obrigatório.</p></mat-error>
+              </mat-form-field>
+            </div>
+            <div class="two-inputs">
+              <mat-form-field class="material-form w20" appearance="outline">
+                <mat-label>Inscrição estadual</mat-label>
+                <input type="text" matInput name="inscricaoEstadual" formControlName="inscricaoEstadual" mask="9{12}" autocomplete="off"/>
+                <mat-error> <p *ngIf="companyFormGroup.controls['inscricaoEstadual'].errors?.required">Inscrição estadual é um campo obrigatório.</p></mat-error>
+              </mat-form-field>
+              <mat-form-field class="material-form" appearance="outline">
+                <mat-label>CNPJ</mat-label>
+                <input type="text" matInput name="cnpj" required formControlName="cnpj" mask="00.000.000/0000-00"/>
+                <mat-error>
+                  <p *ngIf="companyFormGroup.controls['cnpj'].errors?.required">CNPJ é um campo obrigatório.</p>
+                  <p *ngIf="companyFormGroup.controls['cnpj'].errors?.mask || companyFormGroup.controls['cnpj'].errors?.invalidCnpj">CNPJ deve ser válido.</p>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+        <div class="actions">
+          <button mat-button id="company-data-next" class="main-button" matStepperNext>Próximo</button>
+          <a [routerLink]="" id="company-goback" (click)="goHome()">Voltar para o login</a>
+        </div>
+      </mat-step>
+
+      <mat-step [stepControl]="aboutCompanyFormGroup">
+        <form [formGroup]="aboutCompanyFormGroup">
+          <ng-template matStepLabel>Sobre a empresa</ng-template>
+          <div class="step-section">
+            <div>
+              <mat-form-field class="material-form w20" appearance="outline">
+                <mat-label>Email</mat-label>
+                <input type="text" matInput name="email" required formControlName="email"/>
+                <mat-error><p *ngIf="aboutCompanyFormGroup.controls['email'].errors?.required">Email é um campo obrigatório.</p></mat-error>
+              </mat-form-field>
+            </div>
+            <div class="two-inputs">
+              <mat-form-field class="material-form" appearance="outline">
+                <mat-label>Tamanho da empresa</mat-label>
+                <mat-select id="size" formControlName="size" name="size">
+                  <mat-option *ngFor="let s of companySizes" [value]="s.value">
+                    {{ s.label }}
+                  </mat-option>
+                </mat-select>
+                <mat-error> <p *ngIf="aboutCompanyFormGroup.controls['size'].errors?.required">Tamanho é um campo obrigatório.</p></mat-error>
+              </mat-form-field>
+              <mat-form-field class="material-form" appearance="outline">
+                <mat-label>Tipo da empresa</mat-label>
+                <mat-select id="type" formControlName="type" name="type">
+                  <mat-option *ngFor="let type of companyTypes" [value]="type.value">
+                    {{ type.label }}
+                  </mat-option>
+                </mat-select>
+                <mat-error> <p *ngIf="aboutCompanyFormGroup.controls['type'].errors?.required">Tipo é um campo obrigatório.</p></mat-error>
+              </mat-form-field>
+            </div>
+            <div>
+              <mat-form-field class="material-form" appearance="outline">
+                <mat-label>Atividades da empresa</mat-label>
+                <input type="text" matInput name="activity" [matAutocomplete]="autoActivity" required formControlName="activity"/>
+                <mat-autocomplete #autoActivity="matAutocomplete" [displayWith]="displayActivityFn">
+                  <mat-option *ngFor="let option of activityFilteredOptions | async" [value]="option">
+                    {{ option.name }}
+                  </mat-option>
+                </mat-autocomplete>
+                <mat-error> <p *ngIf="aboutCompanyFormGroup.controls['activity'].errors?.required">Atividade é um campo obrigatório.</p></mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+        <div class="actions">
+          <button mat-button id="company-about-next" class="main-button" matStepperNext>Próximo</button>
+          <a [routerLink]="" id="company-goback" (click)="goHome()">Voltar para o login</a>
+        </div>
+      </mat-step>
+
+      <mat-step completed="false">
+        <form [formGroup]="addressFormGroup">
+          <ng-template matStepLabel>Endereço</ng-template>
+          <div class="step-section">
+            <div class="two-inputs">
+              <mat-form-field class="material-form w20" appearance="outline">
+                <mat-label>CEP</mat-label>
+                <input type="text" matInput name="zip_code" required formControlName="zip_code" mask="00000-000" (blur)="fetchAddress()"/>
+                <mat-error> <p *ngIf="addressFormGroup.controls['zip_code'].errors?.required">CEP é um campo obrigatório.</p></mat-error>
+              </mat-form-field>
+              <mat-form-field class="material-form" appearance="outline">
+                <mat-label>Endereço</mat-label>
+                <input type="text" matInput name="street" required formControlName="street"/>
+                <mat-error><p *ngIf="addressFormGroup.controls['street'].errors?.required">Endereço é um campo obrigatório.</p></mat-error>
+              </mat-form-field>
+            </div>
+            <div class="three-inputs">
+              <mat-form-field class="material-form w20" appearance="outline">
+                <mat-label>Número</mat-label>
+                <input type="text" matInput name="number" maxlength="8" required formControlName="number"/>
+                <mat-error><p *ngIf="addressFormGroup.controls['number'].errors?.required">Número é um campo obrigatório.</p></mat-error>
+              </mat-form-field>
+              <mat-form-field class="material-form" appearance="outline">
+                <mat-label>Bairro</mat-label>
+                <input type="text" matInput name="neighborhood" required formControlName="neighborhood"/>
+                <mat-error><p *ngIf="addressFormGroup.controls['neighborhood'].errors?.required">Bairro é um campo obrigatório.</p></mat-error>
+              </mat-form-field>
+              <mat-form-field class="material-form" appearance="outline">
+                <mat-label>Complemento</mat-label>
+                <input type="text" matInput name="complement" />
+              </mat-form-field>
+            </div>
+            <div class="two-inputs">
+              <mat-form-field class="material-form w16" appearance="outline">
+                <mat-label>Cidade</mat-label>
+                <input type="text" matInput name="city" required formControlName="city"/>
+                <mat-error><p *ngIf="addressFormGroup.controls['city'].errors?.required">Cidade é um campo obrigatório.</p></mat-error>
+              </mat-form-field>
+              <mat-form-field class="material-form w26" appearance="outline">
+                <mat-label>Estado</mat-label>
+                <mat-select id="state" formControlName="state" name="state" required>
+                  <mat-option *ngFor="let state of states" [value]="state.value">{{ state.viewValue }}</mat-option>
+                </mat-select>
+                <mat-error><p *ngIf="addressFormGroup.controls['state'].errors?.required">Estado é um campo obrigatório.</p></mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+        </form>
+        <div class="actions">
+          <button mat-button class="main-button" id="company-signin" (click)="signIn()">Finalizar cadastro</button>
+          <a [routerLink]="" id="company-goback" (click)="goHome()">Voltar para o login</a>
+        </div>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Finalizado</ng-template>
+        <div class="success-wrapper">
+          <img
+            src="../../../assets/icons/success.svg"
+            alt="success"
+            width="50"
+            height="50"
+          />
+          <h3 class="bold">Sua conta foi aberta com sucesso!</h3>
+          <p class="large-regular">
+            Sua informações serão analisadas e em breve entraremos em contato.
+          </p>
+          <div class="actions success-actions">
+            <button mat-button class="main-button" id="company-signin" (click)="getCheckoutLink()">Ir para pagamento</button>
+            <a [routerLink]="" id="company-goback" (click)="goHome()">Voltar para o login</a>
+          </div>
+        </div>
+      </mat-step>
+    </mat-horizontal-stepper>
+  </div>
+</div>

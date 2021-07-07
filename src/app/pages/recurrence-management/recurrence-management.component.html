@@ -1,0 +1,201 @@
+<mat-tab-group mat-align-tabs="start">
+  <mat-tab label="Planos" id="tab-plans">
+    <app-recurrence-plan></app-recurrence-plan>
+  </mat-tab>
+  <mat-tab label="Adesões" id="tab-recurrence">
+    <div *ngIf="!recurrenceManagementService.visible">
+      <app-recurrence-list></app-recurrence-list>
+    </div>
+    <div *ngIf="recurrenceManagementService.visible">
+      <fieldset>
+        <form (ngSubmit)="openDialog()">
+          <mat-form-field class="material-form" appearance="outline">
+            <mat-label>Nome/Razão Social</mat-label>
+            <input
+              type="text"
+              name="name_socialnumber"
+              matInput
+              [formControl]="myControl"
+              [matAutocomplete]="auto"
+            />
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+              <mat-option
+                *ngFor="let option of filteredOptions$ | async"
+                [value]="option"
+                (onSelectionChange)="getSelectedSubPeople(option)"
+              >
+                {{ option.name }}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+          <div class="wrapper-button">
+            <button class="main-button-inverse" name="back-btn" (click)="back()">Voltar</button>
+            <button
+              class="main-button"
+              [disabled]="!buttonControl.enableButton"
+              type="submit"
+              name="new-contact-btn"
+            >
+              Novo contato
+            </button>
+          </div>
+        </form>
+        <mat-accordion class="mat-accordion-form" multi>
+          <mat-expansion-panel hideToggle [expanded]="panelOpenState">
+            <form
+              class="form"
+              [formGroup]="recurrenceFormGroup"
+              #myForm="ngForm"
+              (ngSubmit)="openConfirmDialog(myForm)"
+            >
+              <span>
+                <mat-form-field class="material-form" appearance="outline">
+                  <mat-label>Plano de recorrência</mat-label>
+                  <mat-select name="plan" required formControlName="plan">
+                    <mat-option
+                      *ngFor="let option of recurrencePlans"
+                      [value]="option"
+                    >
+                      {{ option.name }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>
+                    <p
+                      *ngIf="
+                        recurrenceFormGroup.controls['plan'].errors?.required
+                      "
+                    >
+                      Plano de recorrência é um campo obrigatório.
+                    </p>
+                  </mat-error>
+                </mat-form-field>
+              </span>
+              <span class="three-input">
+                <mat-form-field class="material-form" appearance="outline">
+                  <mat-label>Expira</mat-label>
+                  <mat-select name="expire" required formControlName="expire">
+                    <mat-option
+                      *ngFor="let option of expireSelecet"
+                      [value]="option.value"
+                    >
+                      {{ option.label }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>
+                    <p
+                      *ngIf="
+                        recurrenceFormGroup.controls['expire'].errors?.required
+                      "
+                    >
+                      Plano de recorrência é um campo obrigatório.
+                    </p>
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="material-form" appearance="outline">
+                  <mat-label>Data inicial</mat-label>
+                  <input
+                    matInput
+                    [matDatepicker]="picker1"
+                    name="start_date"
+                    (click)="picker1.open()"
+                    required
+                    formControlName="start_date"
+                    readonly
+                    class="datepicker-input"
+                    [min]="minDate"
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="picker1"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker #picker1 disabled="false"></mat-datepicker>
+                  <mat-error>
+                    <p
+                      *ngIf="
+                        recurrenceFormGroup.controls['start_date'].errors
+                          ?.required
+                      "
+                    >
+                      Data inicial é um campo obrigatório.
+                    </p>
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="material-form" appearance="outline" *ngIf="recurrenceFormGroup.value.expire">
+                  <mat-label>Data final</mat-label>
+                  <input
+                    matInput
+                    [matDatepicker]="picker2"
+                    name="end_date"
+                    (click)="picker2.open()"
+                    [required]="recurrenceFormGroup.value.expire"
+                    formControlName="end_date"
+                    readonly
+                    class="datepicker-input"
+                    [min]="minDate"
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="picker2"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker #picker2 disabled="false"></mat-datepicker>
+                  <mat-error>
+                    <p
+                      *ngIf="
+                        recurrenceFormGroup.controls['start_date'].errors
+                          ?.required
+                      "
+                    >
+                      Data final é um campo obrigatório.
+                    </p>
+                  </mat-error>
+                </mat-form-field>
+              </span>
+              <span class="two-input">
+                <mat-form-field class="material-form" appearance="outline">
+                  <mat-label>Formas de Pagamento</mat-label>
+                  <mat-select
+                    name="payment_type"
+                    required
+                    formControlName="payment_type"
+                  >
+                    <mat-option
+                      *ngFor="let option of paymentTypes"
+                      [value]="option.type"
+                    >
+                      {{ option.label }}
+                    </mat-option>
+                  </mat-select>
+                  <mat-error>
+                    <p
+                      *ngIf="
+                        recurrenceFormGroup.controls['payment_type'].errors
+                          ?.required
+                      "
+                    >
+                      Plano de recorrência é um campo obrigatório.
+                    </p>
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field class="material-form" appearance="outline">
+                  <mat-label>Observações</mat-label>
+                  <textarea
+                    name="comments"
+                    type="text"
+                    matInput
+                    formControlName="comments"
+                  ></textarea>
+                  <p class="inside-text">Texto do e-mail</p>
+                </mat-form-field>
+              </span>
+              <span>
+                <button class="main-button" type="submit" name="new-recurrence-btn">
+                  Cadastrar nova adesão
+                </button>
+              </span>
+            </form>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </fieldset>
+    </div>
+  </mat-tab>
+</mat-tab-group>

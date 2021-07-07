@@ -1,0 +1,47 @@
+<div class="action-bar-header">
+  <div class="inside-nav"><a [routerLink]="['/home']">Home</a> > Depósito</div>
+  <div class="action-bar">
+    <app-action-bar></app-action-bar>
+  </div>
+</div>
+<div class="content">
+  <div class="card">
+    <div class="loading-shade" *ngIf="loading">
+      <mat-spinner></mat-spinner>
+    </div>
+    <section>
+      <h3 class="bold-text">Depósito por boleto bancário</h3>
+      <div class="section-body">
+        <p class="small-light">Adicione um valor para o depósito.</p>
+        <p class="small-light">
+          Pode levar até 03 dias para que o depósito seja efetivado.
+        </p>
+        <span>
+          <mat-form-field class="material-form" appearance="outline">
+            <mat-label>Valor</mat-label>
+            <input
+              type="text"
+              matInput
+              name="amount"
+              [formControl]="amountControl"
+              currencyMask
+              
+            />
+          </mat-form-field>
+          <button
+            class="main-button"
+            name="confirm-btn"
+            (click)="generateBillet()"
+            [disabled]="
+              !this.amountControl.value ||
+              this.amountControl.value < 10 ||
+              this.amountControl.value > 250000
+            "
+          >
+            Confirmar valor
+          </button>
+        </span>
+      </div>
+    </section>
+  </div>
+</div>

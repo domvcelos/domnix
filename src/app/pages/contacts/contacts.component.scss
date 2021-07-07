@@ -1,0 +1,38 @@
+.content {
+  .card {
+    background-color: var(--nix-white);
+    border-radius: 8px;
+    padding: 50px 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    .tab-header {
+      .title-section {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .search-section {
+        margin-top: 24px;
+        mat-form-field {
+          width: 50%;
+        }
+      }
+    }
+    .table-footer {
+      justify-content: flex-end !important;
+    }
+  }
+}
+.action {
+  cursor: pointer;
+  background: none;
+  border: none;
+  &:focus {
+    outline: none;
+  }
+}
+.main-button {
+  width: 160px;
+}
